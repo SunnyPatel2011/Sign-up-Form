@@ -90,7 +90,7 @@ select,
     font-size: 18px;
     color: white;
     font-family: sans-serif;
-    letter-spacing: 1.9px;
+    letter-spacing: 3.9px;
     padding: 20px 45px 20px 20px;
 }
 
@@ -102,7 +102,9 @@ select,
 .input-box input::placeholder{
     color: white;
 }
+
 /************ Icons **************/
+
 .input-box i {
     position: absolute;
     right: 20px;
