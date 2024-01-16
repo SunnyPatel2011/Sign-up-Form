@@ -1,0 +1,37 @@
+*{
+    margin: 0;
+    padding: 0;
+
+}
+.mainbox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.box1{
+    background-color: aqua;
+    width: 200px;
+    height: 500px;
+    border: 2px solid black;
+    
+}
+.box2{
+    background-color: blueviolet;
+    width: 200px;
+    border: 2px solid black;
+    height: 500px;
+}
+button{
+    position: absolute;
+    width: 90px;
+    left: 750px;
+    top: 470px;
+}
+input{
+    border-radius: 30px;
+    height: 20px;
+    background: transparent;
+    border: 2px solid lightseagreen;
+    
+}
+
