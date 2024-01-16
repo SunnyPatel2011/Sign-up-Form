@@ -1,7 +1,7 @@
 ///// This is used to store data in local storage using json file.
 
 function saveFormData(event) {
-    event.preventDefault(); 
+    event.preventDefault();
 
     // Retrieve existing data or initialize an empty array
     const existingData = localStorage.getItem('userData');
@@ -27,10 +27,10 @@ function saveFormData(event) {
     localStorage.setItem('userData', updatedData);
 
     // Optionally, clear the form fields
-    // document.getElementById("firstname").value = "";
-    // document.getElementById("lastname").value = "";
-    // document.getElementById("email").value = "";
-    // document.getElementById("password").value = "";
-    // document.getElementById("dob").value = "";
-    // document.getElementById("gender").value = "";
+    document.getElementById("firstname").value = "";
+    document.getElementById("lastname").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("password").value = "";
+    document.getElementById("dob").value = "";
+    document.getElementById("gender").value = "";
 }
