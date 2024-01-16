@@ -42,35 +42,6 @@ video {
     text-align: center;
 }
 
-/* .color-changing-text,
-i,
-select,
-.input-box input {
-    animation: colorChange 23.4s infinite;
-}
-
-@keyframes colorChange {
-    0% {
-        color: black;
-    }
-
-    25% {
-        color: black;
-    }
-
-    50% {
-        color: #F7F9F9;
-    }
-
-    75% {
-        color: #D0D3D4;
-    }
-
-    100% {
-        color: #FDFEFE;
-    }
-} */
-
 .wrapper .input-box {
     position: relative;
     width: 100%;
