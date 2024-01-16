@@ -66,7 +66,7 @@ video {
 }
 
 .input-box input:hover {
-    border: 2.5px solid lightcyan;
+    border: 2.5px solid lightblue;
     transition: 1s;
 }
 
@@ -172,4 +172,8 @@ option {
     font-size: 19px;
     color: #333;
     font-weight: 600;
+}
+.wrapper .btn:hover{
+    background: lightsteelblue;
+    transition: 1.5s;
 }
