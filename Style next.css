@@ -8,7 +8,7 @@ body {
     position: absolute;
     background: linear-gradient(#83a4d4, #b6fbff);
     border-radius:0% 100% 100% 0% / 51% 0% 100% 49% ;
-    width: 40rem;
+    width: 50%;
     height: 37.4rem;
     z-index: -1;
   }
@@ -35,8 +35,8 @@ body {
    left: 10%;
 }
 
-@media only screen and (max-width: 600px) {
-    .logo, .name, .box {
+@media only screen and (max-width: 900px) and (min-width: 600px) {
+    .logo, .name {
         display: none;
     }
 }
@@ -62,7 +62,9 @@ h2 {
     margin-bottom: 20px;
 }
 
-
+label{
+    font-size: 15px;
+}
 /* first and last name */
 
 .input-group {
@@ -94,10 +96,7 @@ h2 {
     margin-top: 20px;
        
 }
-label {
-    margin-bottom: 8px;
-    color: #333;
-}
+
 
 /*** dob ***/
 
