@@ -21,7 +21,7 @@ body {
     
 }
 
-/**** LOGO ******/
+/************ LOGO **************/
 
 .logo, .name {
     text-align: center;
@@ -41,7 +41,7 @@ body {
     }
 }
 
-/***** Form ******/
+/*********** Form ************/
 
 .signup-form {
     background-color: white;
@@ -54,7 +54,7 @@ body {
     max-width: 550px;
 }
 
-/* Heading */
+/*********** Heading *************/
 
 h2 {
     color: #333;
@@ -64,6 +64,9 @@ h2 {
 
 label{
     font-size: 15px;
+}
+#lastname{
+    margin-top: 23px;
 }
 /* first and last name */
 
@@ -77,7 +80,7 @@ label{
     margin-right: 4%;
 }
 
-/*** Border for all inputs ***/
+/********* Border for all inputs **********/
 
 #firstname,#lastname,#email,#password,#dob{
     border: 1px solid #ccc;
@@ -88,8 +91,10 @@ label{
 #firstname:hover,#lastname:hover,#email:hover,#password:hover,#dob:hover{
     border: 1px solid darkcyan;
 }
-
-/*** inputs for other feilds ***/
+#firstname,#lastname,#email,#password,#gender::placeholder{
+    letter-spacing: 1px;
+}
+/******** inputs for other feilds *******/
 
 .input-max{
     display: block;
@@ -98,13 +103,14 @@ label{
 }
 
 
-/*** dob ***/
+/*********** dob *************/
 
 input[type="date"] {
     color: #808080; /* Set the text color */
+    
 }
 
-/*** Gender Feild ***/
+/******** Gender ******/
 
 input, select {
     width: 100%;
@@ -144,7 +150,7 @@ option {
 }
 
 
-/*** Button ***/
+/************* Button ***********/
 
 button {
     background-color: darkcyan;

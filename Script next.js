@@ -18,6 +18,7 @@ function validateAndSubmit(event) {
     minDate.setFullYear(currentDate.getFullYear() - 100);
 
   clearErrorMessages();
+  
     ///// Firstname /////
 
     if (!firstname) {
@@ -33,7 +34,7 @@ function validateAndSubmit(event) {
     ///// Lastname //////
 
     if (!lastname) {
-        displayError("lastname", "Please fill out Lastname field");
+        displayError("lastname", "Please fill out lastname field");
         return;
     }
 
@@ -101,10 +102,8 @@ function validateAndSubmit(event) {
  
      userDataArray.push(newUser);
 
-     // Convert the array to JSON
-     const updatedData = JSON.stringify(userDataArray);
- 
-     // Store the updated data in Local Storage
+     const updatedData = JSON.stringify(userDataArray); 
+
      localStorage.setItem('userData', updatedData);
 
      document.getElementById("firstname").value = "";
@@ -119,7 +118,9 @@ function validateAndSubmit(event) {
         const errorDiv = document.createElement("div");
         errorDiv.className = "error-message";
         errorDiv.style.color = "red";  
-        errorDiv.innerHTML = message.toLowerCase();
+        errorDiv.style.fontSize = "12px";
+        errorDiv.style.marginTop = "5px";
+        errorDiv.innerHTML = message;
     
         const fieldElement = document.getElementById(field);
         fieldElement.parentNode.insertBefore(errorDiv, fieldElement.nextSibling);
