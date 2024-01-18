@@ -11,7 +11,7 @@ function validateAndSubmit(event) {
 
 
     const namepattern = /^[A-Za-z]+$/;
-    const emailpattern = /^[A-Za-z0-9_-]+@(gmail|yahoo)\.(com|in)$/;
+    const emailpattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const inputDate = new Date(dob);
     const currentDate = new Date();
     const minDate = new Date();

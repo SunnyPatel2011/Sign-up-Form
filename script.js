@@ -1,7 +1,7 @@
 function validateAndSubmit(event) {
     event.preventDefault(); 
 
-    // Get input values
+
     const firstname = document.getElementById("firstname").value;
     const lastname = document.getElementById("lastname").value;
     const email = document.getElementById("email").value;
@@ -11,7 +11,7 @@ function validateAndSubmit(event) {
 
 
     const namepattern = /^[A-Za-z]+$/;
-    const emailpattern = /^[A-Za-z0-9_-]+@(gmail|yahoo)\.(com|in)$/;
+    const emailpattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const inputDate = new Date(dob);
     const currentDate = new Date();
     const minDate = new Date();
@@ -29,6 +29,7 @@ function validateAndSubmit(event) {
             return;
         
     }
+    
 
      ///// Lastname //////
 
@@ -50,7 +51,7 @@ function validateAndSubmit(event) {
     }
 
     if (!emailpattern.test(email)) {
-        alert("email contain only gmail.com/yahoo.com/.in");
+        alert("Please enter valid email address");
         return;
     }
 
@@ -112,4 +113,5 @@ function validateAndSubmit(event) {
      document.getElementById("password").value = "";
      document.getElementById("dob").value = "";
      document.getElementById("gender").value = "";
+
 }
