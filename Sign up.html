@@ -12,11 +12,11 @@
 
 <body>
     <!-- VIDEO -->
-    <video autoplay loop muted playsinline>
+    <!-- <video autoplay loop muted playsinline>
         <source src="images/123.mp4" type="video/mp4">
-    </video>
+    </video> -->
     <div class="wrapper">
-        <form>
+        <form id="myForm" onsubmit="validateAndSubmit(event)">
             <h2 class="color-changing-text">Sign up</h2>
 
             <!------ First name ------>
@@ -67,7 +67,7 @@
 
             <!------------ Button ----------->
 
-            <button type="submit" class="btn" onclick="saveFormData()">SAVE</button>
+            <button type="submit" class="btn" onclick="validateAndSubmit(event)">SAVE</button>
         </form>
     </div>
     </div>

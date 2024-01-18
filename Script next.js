@@ -1,7 +1,7 @@
 function validateAndSubmit(event) {
     event.preventDefault(); 
 
-    // Get input values
+
     const firstname = document.getElementById("firstname").value;
     const lastname = document.getElementById("lastname").value;
     const email = document.getElementById("email").value;
@@ -17,70 +17,71 @@ function validateAndSubmit(event) {
     const minDate = new Date();
     minDate.setFullYear(currentDate.getFullYear() - 100);
 
+  clearErrorMessages();
     ///// Firstname /////
 
     if (!firstname) {
-        alert("please fill out Firstname feild");
+        displayError("firstname", "Please fill out Firstname field");
         return;
     }
-    
-        if (!namepattern.test(firstname)) {
-            alert('First name should only contain letters');
-            return;
-        
+
+    if (!namepattern.test(firstname)) {
+        displayError("firstname", 'Alphabetic characters only.');
+        return;
     }
 
-     ///// Lastname //////
+    ///// Lastname //////
 
     if (!lastname) {
-        alert("please fill out Lastname feild");
+        displayError("lastname", "Please fill out Lastname field");
         return;
     }
 
     if (!namepattern.test(lastname)) {
-        alert("Last name should only contain letters");
+        displayError("lastname", "Alphabetic characters only.");
         return;
     }
 
     ////// Email ///////
-    
+
     if (!email) {
-        alert("please fill out Email feild");
+        displayError("email", "Please fill out Email field");
         return;
     }
 
     if (!emailpattern.test(email)) {
-        alert("email contain only gmail.com/yahoo.com/.in");
+        displayError("email", "Please enter a valid email address.");
         return;
     }
 
     ////// password ///////
 
-    
     if (!password) {
-        alert("please fill out password feild");
+        displayError("password", "Please fill out password field");
         return;
     }
 
     if (!password.trim() === "") {
-        alert("Please fill out password feild");
+        displayError("password", "Please fill out password field");
         return;
     }
 
     ///// Date of Birth ///////
 
-    
+    if (!dob) {
+        displayError("dob", "Please fill out dob field");
+        return;
+    }
 
     if (inputDate > currentDate || inputDate < minDate) {
-        alert("Invalid date of birth. Age must be between 0 and 100 years.");
+        displayError("dob", "Invalid date of birth. Age must be between 0 and 100 years.");
         return;
     }
 
     ////// GENDER ///////
-    
 
     if (!gender) {
-        alert("Please fill out the gender feild");
+        displayError("gender", "Please fill out the gender field");
         return;
     }
     
@@ -112,4 +113,24 @@ function validateAndSubmit(event) {
      document.getElementById("password").value = "";
      document.getElementById("dob").value = "";
      document.getElementById("gender").value = "";
+
+
+     function displayError(field, message) {
+        const errorDiv = document.createElement("div");
+        errorDiv.className = "error-message";
+        errorDiv.style.color = "red";  
+        errorDiv.innerHTML = message.toLowerCase();
+    
+        const fieldElement = document.getElementById(field);
+        fieldElement.parentNode.insertBefore(errorDiv, fieldElement.nextSibling);
+
+        fieldElement.addEventListener("focus", function () {
+            errorDiv.remove();
+        });
+    }
+    
+    function clearErrorMessages() {
+        const errorMessages = document.querySelectorAll(".error-message");
+        errorMessages.forEach((errorMessage) => errorMessage.remove());
+    }
 }

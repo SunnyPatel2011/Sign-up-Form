@@ -1,0 +1,178 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background:lightcyan;
+}
+.box{
+    position: absolute;
+    background: linear-gradient(#83a4d4, #b6fbff);
+    border-radius:0% 100% 100% 0% / 51% 0% 100% 49% ;
+    width: 40rem;
+    height: 37.4rem;
+    z-index: -1;
+  }
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    
+}
+
+/**** LOGO ******/
+
+.logo, .name {
+    text-align: center;
+    /* margin-bottom: 20px; */
+}
+.logo, .name{
+    padding: auto;
+    width: 25%;
+   position: absolute;
+   top: 21%;
+   left: 10%;
+}
+
+@media only screen and (max-width: 600px) {
+    .logo, .name, .box {
+        display: none;
+    }
+}
+
+/***** Form ******/
+
+.signup-form {
+    background-color: white;
+    box-shadow: 5px 7px 10px -5px gray;
+    padding: 20px;
+    border-radius: 8px;
+    width: 70%;
+    right: 1%;
+    position: relative;
+    max-width: 550px;
+}
+
+/* Heading */
+
+h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+/* first and last name */
+
+.input-group {
+    display: flex;
+    width: 103.5%;
+}
+
+.half-width {
+    width: 48%;
+    margin-right: 4%;
+}
+
+/*** Border for all inputs ***/
+
+#firstname,#lastname,#email,#password,#dob{
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+}
+#firstname:hover,#lastname:hover,#email:hover,#password:hover,#dob:hover{
+    border: 1px solid darkcyan;
+}
+
+/*** inputs for other feilds ***/
+
+.input-max{
+    display: block;
+    margin-top: 20px;
+       
+}
+label {
+    margin-bottom: 8px;
+    color: #333;
+}
+
+/*** dob ***/
+
+input[type="date"] {
+    color: #808080; /* Set the text color */
+}
+
+/*** Gender Feild ***/
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+select {
+    border-radius: 6px;
+    margin-left: 3px;
+    background: none; 
+    font-size: 15px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    padding: 5px 5px 7px 5px;
+    color: gray;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.color-text{
+    background: #808080;
+    color: white;
+}
+select:hover {
+    border: 1px solid darkcyan ;
+}
+
+option {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: teal;
+    font-family: monospace;
+    background: transparent;
+}
+
+
+/*** Button ***/
+
+button {
+    background-color: darkcyan;
+    font-family: monospace;
+    font-size: 15px;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    border: 2px solid lightblue;
+    border-radius: 15px;
+}
+
+button:hover {
+    border: 2px solid lightcyan;
+}
+
+/* small Screen sizing */
+
+@media only screen and (min-width: 601px) {
+    .container {
+        flex-direction: row;
+    }
+
+    .signup-form {
+        margin-left: auto;
+    }
+}
