@@ -94,6 +94,15 @@ label{
 #firstname,#lastname,#email,#password,#gender::placeholder{
     letter-spacing: 1px;
 }
+p{
+    position: absolute;
+    margin-top: 29.5%;
+    left: 12.5%;
+    color:darkslategray;
+    font-family: monospace;
+    font-size: 15px;
+}
+
 /******** inputs for other feilds *******/
 
 .input-max{
