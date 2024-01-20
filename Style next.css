@@ -117,6 +117,9 @@ p{
 input[type="date"] {
     color: #808080;
 }
+input[type="date"]::-webkit-calendar-picker-indicator {
+    margin-right: -8px;
+}
 
 /******** Gender ******/
 input, select {
@@ -130,11 +133,9 @@ input, select {
 
 select {
     border-radius: 6px;
-    margin-left: 3px;
-    background: none; 
     font-size: 15px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    padding: 5px 12px 11px 5px;
+    padding: 2px 0px 0px 9px 3px;
     color: gray;
     border: 1px solid #ccc;
     outline: none;
@@ -153,7 +154,6 @@ option {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     color: teal;
     font-family: monospace;
-    background: transparent;
 }
 
 
