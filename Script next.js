@@ -17,7 +17,7 @@ function validateAndSubmit(event) {
     const minDate = new Date();
     minDate.setFullYear(currentDate.getFullYear() - 100);
 
-  clearErrorMessages();
+  clearErrorMessages(); 
   
     ///// Firstname /////
 
