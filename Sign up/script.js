@@ -11,13 +11,13 @@ function validateAndSubmit(event) {
 
 
     const namepattern = /^[A-Za-z]+$/;
-    const emailpattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const emailpattern = /^[a-zA-Z0-9._]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const inputDate = new Date(dob);
     const currentDate = new Date();
     const minDate = new Date();
     minDate.setFullYear(currentDate.getFullYear() - 100);
-
-  clearErrorMessages(); 
+    
+    clearErrorMessages();
   
     ///// Firstname /////
 
@@ -100,7 +100,7 @@ function validateAndSubmit(event) {
     };
 
  
-     userDataArray.push(newUser);
+    userDataArray.push(newUser);
 
      const updatedData = JSON.stringify(userDataArray); 
 
@@ -129,7 +129,7 @@ function validateAndSubmit(event) {
             errorDiv.remove();
         });
     }
-    
+ 
     function clearErrorMessages() {
         const errorMessages = document.querySelectorAll(".error-message");
         errorMessages.forEach((errorMessage) => errorMessage.remove());
