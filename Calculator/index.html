@@ -1,56 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="./main.css">
-    <title>calculator</title>
+    <link rel="stylesheet" href="main.css">
+    <title>Calculator</title>       
 </head>
-
 <body>
-    <div class="calculator">
-        <input type="text" placeholder="0" id="inputBox" readonly>
-        <div>
-            <button class="operator ac">AC</button>
-            <button class="operator del">⇐</button>
-            <button class="operator brac">()</button>
-            <button class="operator div">/</button>
-        </div>
-
-        <div>
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-            <button class="operator mul">*</button>
-        </div>
-
-
-        <div>
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button class="operator min">-</button>
-        </div>
-
-
-        <div>
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button class="operator plus">+</button>
-        </div>
+<div class="calculator">
+    <input id="Display" type="text" placeholder="0" readonly>
+    <button onclick="clearResult(); focusScreen()" class="clear">AC</button>
+    <button onclick="clearEntry(); focusScreen()" class="clear">CE</button>
+    <button onclick="Result('%'); focusScreen()" class="opera">%</button>
+    <button onclick="Result('/'); focusScreen()" class="opera">/</button>
+    <button onclick="Result('7'); focusScreen()">7</button>
+    <button onclick="Result('8'); focusScreen()">8</button>
+    <button onclick="Result('9'); focusScreen()">9</button>
+    <button onclick="Result('*'); focusScreen()" class="opera">*</button>
+    <button onclick="Result('4'); focusScreen()">4</button>
+    <button onclick="Result('5'); focusScreen()">5</button>
+    <button onclick="Result('6'); focusScreen()">6</button>
+    <button onclick="Result('-'); focusScreen()" class="opera">-</button>
+    <button onclick="Result('1'); focusScreen()">1</button>
+    <button onclick="Result('2'); focusScreen()">2</button>
+    <button onclick="Result('3'); focusScreen()">3</button>
+    <button onclick="Result('+'); focusScreen()" class="opera">+</button>
+    <button onclick="Result('0'); focusScreen()">0</button>
+    <button onclick="Result('.'); focusScreen()">.</button>
+    <button onclick="Result('()'); focusScreen()">()</button>
+    <button onclick="calculate(); focusScreen()" class="equal">=</button>
+    
+</div>
+<p id="trashicon" class="icon"><i class='bx bx-trash'></i></p>
+<div id="history"><center>History</center><hr></div>
 
 
-        <div>
-            <button class="history">His </button>
-            <button>0</button>
-            <button>.</button>
-            <button class="equalBtn">=</button>
-        </div>
-    </div>
-</body>
+
 <script src="script.js"></script>
-
+</body>
 </html>

@@ -1,100 +1,95 @@
-let display = document.getElementById('inputBox');
-let buttons = document.querySelectorAll('button');
+let Display = document.getElementById('Display');
+let historyContainer = document.getElementById('history');
+let trashicon = document.getElementById('trashicon');
+let Bracket = true;
+function Result(value) {
+    Display.value += value;
+}
 
-let buttonsArray = Array.from(buttons);
-let bracket = true;
-let str = '';
-let records = [];
-buttonsArray.forEach(btn => {
 
-    btn.addEventListener('click', (event) => {
-        handleClick(event.target.innerHTML);
+function clearResult() {
+    Display.value = '';
+}
 
-    });
-});
+function clearEntry() {
+   Display.value = Display.value.substring(0, Display.value.length-1);   
+}
+
+
+function calculate() {
+    try {
+        let expression = Display.value;
+        if (expression.includes('%')) {
+            const parts = expression.split('%');
+            const percentage = parseFloat(parts[0]);
+            const number = parseFloat(parts[1]);
+           let answer = (percentage / 100) * number;
+            Display.value = answer;
+            let his = expression + ' = ' + answer;
+            saveHistory(his);
+        } else {
+            let answer = eval(expression);
+            Display.value = answer;
+            let his = expression + ' = '+ answer;
+            saveHistory(his);
+        }
+    } catch (error) {
+        Display.value = 'Error';
+    }
+}
+ 
+function saveHistory(his) {
+    let history = document.createElement('p');    
+    let parts = his.match(/.{1,33}/g); 
+    history.textContent = parts.join('\n');
+    historyContainer.appendChild(history);
+}
+
+
+function focusScreen() {
+    Display.focus();
+}
+
+
+function Result(val) {
+    if (val === '()') {
+        if (Bracket) {
+            Display.value += '(';
+            Bracket = true;
+        } else {
+            Display.value += ')';
+            Bracket = false;
+        }
+        Bracket = !Bracket;
+    } else {
+        Display.value += val;
+    }
+}
+
+
+trashicon.addEventListener('click', deletehistory);
+function deletehistory(){
+    historyContainer.innerHTML = '';
+    location.reload();
+}
 
 document.addEventListener('keydown', (event) => {
     const key = event.key;
-    if (key >= '0' && key <= '9') {
-        str += key;
-        display.value = str;
+    if ((key >= '0' && key <= '9') || key === '.' || key === '+' || key === '-' || key === '*' || key === '/' || key === '(' || key === ')' || key === '%') {
+        Result(key);
+        focusScreen();
 
-    } else if (key === '.') {
-        str += key;
-        display.value = str;
-
-    } else if (key === '+' || key === '-' || key === '*' || key === '/' || key === '(' || key === ')') {
-        str += key;
-        display.value = str;
-
-    } else if (key === 'Enter') {
-        let result = eval(str);
-        let Calculation = str + '=' + result;
-        records.push(Calculation);
-        str = '';
-        display.value = result;
-
+    }else if (key === 'Enter') {
+            calculate();
+        
     } else if (key === 'Backspace') {
-        str = str.substring(0, str.length - 1);
-        display.value = str;
-
+        clearEntry();
+        focusScreen();
     } else if (key === 'Escape') {
-        str = '';
-        display.value = str;
-
-    } else if (key === 'h') {
-        let result = history();
-        display.value = result;
+        clearResult();
+        focusScreen();
+    }else if (key === 'Delete') {
+        deletehistory();
+        focusScreen();
     }
 });
-
-function handleClick(button) {
-    if (button == '⇐') {
-        str = str.substring(0, str.length - 1);
-        display.value = str;
-
-    } else if (button == 'AC') {
-        str = '';
-        display.value = str;
-
-    } else if (button == '=') {
-        let result = eval(str);
-        let Calculation = str + ' = ' + result;
-        records.push(Calculation);
-        str = '';
-        display.value = result;
-
-    } else if (button == 'His') {
-        let result = history();
-        display.value = result;
-
-    } else if (button == '()') {
-        if (bracket) {
-            str += '(';
-            display.value = str;
-
-        } else {
-            str += ')';
-            display.value = str;
-        }
-        bracket = !bracket;
-
-    } else {
-        str += button;
-        display.value = str;
-    }
-}
-
-function history() {
-    try {
-        if (records.length === 0) {
-            return 'EMPTY';
-        }
-        else {
-            let historyStr = records.shift();
-            return historyStr;
-        }
-    } catch (error) {
-        return 'Error';
-    }
-}
