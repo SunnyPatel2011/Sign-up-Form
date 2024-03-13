@@ -12,6 +12,7 @@ body {
     height: 37.4rem;
     z-index: -1;
   }
+  
 .container {
     display: flex;
     align-items: center;
