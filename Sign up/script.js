@@ -127,7 +127,7 @@ function validateAndSubmit(event) {
 
         fieldElement.addEventListener("focus", function () {
             errorDiv.remove();
-        });
+        });  
     }
  
     function clearErrorMessages() {
