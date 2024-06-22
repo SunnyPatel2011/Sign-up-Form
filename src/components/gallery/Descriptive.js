@@ -3,19 +3,19 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 // import { Outlet } from "react-router-dom";
 import './descriptive.css';
 import toast, { Toaster } from 'react-hot-toast';
-import icon_black from '../assets/heart_black.png';
-import icon_white from '../assets/heart_white.png';
-import icon_plus from '../assets/plus.png';
-import icon_drop from '../assets/drop_down.png';
-import go_back from '../assets/back.png';
-import Gif_loader from '../assets/loaderGif.gif';
-import calender_icon from '../assets/calendar.png';
-import camera_icon from '../assets/camera2.png';
-import security_icon from '../assets/verified.png';
-import location_icon from '../assets/location.png';
-import share_icon from '../assets/share.png';
-import info_icon from '../assets/info.png';
-import action_icon from '../assets/more.png';
+import icon_black from '../assets//Descriptive/heart_black.png';
+import icon_white from '../assets/Descriptive/heart_white.png';
+import icon_plus from '../assets/Descriptive/plus.png';
+import icon_drop from '../assets/Descriptive/drop_down.png';
+import go_back from '../assets/Descriptive/back.png';
+import Gif_loader from '../assets/Descriptive/loaderGif.gif';
+import calender_icon from '../assets/Descriptive/calendar.png';
+import camera_icon from '../assets/Descriptive/camera2.png';
+import security_icon from '../assets/Descriptive/verified.png';
+import location_icon from '../assets/Descriptive/location.png';
+import share_icon from '../assets/Descriptive/share.png';
+import info_icon from '../assets/Descriptive/info.png';
+import action_icon from '../assets/Descriptive/more.png';
 import Header from "../header/header";
 
 
@@ -44,7 +44,7 @@ const Descriptive = () => {
         }
     }, [id, location.state]);
 
-    
+
 
     const handleChange = () => {
         setIsFocused(!isFocused);
@@ -71,6 +71,19 @@ const Descriptive = () => {
         console.log('image clicked for full screen');
         setIsFullScreen(!isFullScreen);
     }
+
+    const handleAddToCollection = () => {
+        let collection = JSON.parse(localStorage.getItem('imageCollection')) || [];
+        if (!collection.includes(photo.id)) {
+            collection.push(photo.id);
+            localStorage.setItem('imageCollection', JSON.stringify(collection));
+            toast.success("Image added to collection");
+        } else {
+            toast("Image is already in the collection");
+        }
+    };
+    console.log("Plus button clicked", handleAddToCollection);
+
 
     if (!photo) {
         return <img src={Gif_loader} className="loaders_gif" />;
@@ -107,7 +120,7 @@ const Descriptive = () => {
                                 className={`icon ${isFocused ? 'icon_change' : ''}`}
                                 alt="toggle icon"
                                 onClick={handleChange} />
-                            <img src={icon_plus} alt="" className="plus_icon" />
+                            <img src={icon_plus} alt="" className="plus_icon" onClick={handleAddToCollection} />
 
                             <button className="download_size" onClick={() => handleDownload()}>Download</button>
                             <div className="dropdown-container">

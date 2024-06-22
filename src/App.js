@@ -4,8 +4,8 @@ import Descriptive from "./components/gallery/Descriptive.js";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Header from "./components/header/header.js";
 import Gallery from "./components/gallery/Gallery.js";
-// import RootLayout from './components/pages/RootLayout.js';
-import Gif_loader from './components/assets/loaderGif.gif';
+import Collection from "./components/gallery/collection.js";
+import Gif_loader from './components/assets/Descriptive/loaderGif.gif';
 
 function App() {
     const [photos, setPhotos] = useState([]);
@@ -14,7 +14,7 @@ function App() {
 
     useEffect(() => {
         if (!photos.length) {
-            fetch(`https://api.unsplash.com/photos/random?count=30&client_id=${client_id}`)
+            fetch(`https://api.unsplash.com/photos/random?count=3&client_id=${client_id}`)
                 .then(response => response.json())
                 .then(data => {
                     setPhotos(data);
@@ -25,7 +25,7 @@ function App() {
                     console.error("Error fetching photos:", error);
                     setLoading(false);
                 });
-        }   
+        }
     }, [client_id, photos.length]);
 
 
@@ -48,17 +48,21 @@ function App() {
         {
             path: '/descriptive/:id',
             element: <Descriptive />
-        }    
+        },
+        {
+            path: '/collection',
+            element: <Collection />
+        }
     ]);
 
 
 
-return (
-    <>
+    return (
+        <>
 
-        <RouterProvider router={router} />
-    </>
-);
+            <RouterProvider router={router} />
+        </>
+    );
 }
 
 export default App;
