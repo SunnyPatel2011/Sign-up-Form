@@ -9,10 +9,10 @@ const Gallery = ({ photos, loading, isSearchPerformed }) => {
   const navigate = useNavigate();
 
   const handleDownload = (url, altDescription) => {
-   const link = document.createElement('a');
-   link.href = `${url}&force=true`;
-   link.download = altDescription || 'downloaded-image';
-   link.click(); 
+    const link = document.createElement('a');
+    link.href = `${url}&force=true`;
+    link.download = altDescription || 'downloaded-image';
+    link.click();
   }
 
   return (

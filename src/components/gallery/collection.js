@@ -13,7 +13,7 @@ const Collection = () => {
         if (storedCollection.length > 0) {
             const fetchImages = async () => {
                 try {
-                    const promises = storedCollection.map(imageId => 
+                    const promises = storedCollection.map(imageId =>
                         fetch(`https://api.unsplash.com/photos/${imageId}?client_id=${client_id}`)
                             .then(response => response.json())
                     );

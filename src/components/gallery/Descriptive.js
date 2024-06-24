@@ -115,7 +115,7 @@ const Descriptive = () => {
     }
 
 
-
+    /// DATE /////
     const date = new Date(photo.created_at);
     const day = date.getDate();
     const month = date.toLocaleString('en-GB', { month: 'short' });
@@ -128,6 +128,8 @@ const Descriptive = () => {
             <div className="inside_image">
                 {photo ? (
                     <>
+                        {/* HEADER PART */}
+
                         <div className="div_user">
                             <Link to={photo.user.links.html}>
                                 <img src={photo.user.profile_image.medium} className='profile_img' alt="" />
@@ -155,11 +157,14 @@ const Descriptive = () => {
                             </div>
                         </div>
 
+                        {/* Image */}
+
                         <div>
                             <img src={photo.urls.small} alt={photo.alt_description}
                                 onClick={toggleFullScreen}
                                 className={`main_image ${isFullScreen ? 'full_screen' : ''}`} />
 
+                            {/* After Image Component */}
 
                             <div className="all_details">
                                 <div className="view">
@@ -199,6 +204,8 @@ const Descriptive = () => {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Information of Images */}
                         <div>
                             <div className="icon_location">
                                 {photo.location.name ? (
@@ -230,6 +237,9 @@ const Descriptive = () => {
                     <p>No photo data available</p>
                 )}
             </div>
+
+            {/* Rendering Images */}
+
             <h1>Explore more Images</h1>
             <div className="image-grid">
                 {photos.map((image) => (
