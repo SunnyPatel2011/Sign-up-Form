@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
-// import { Outlet } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import './descriptive.css';
 import toast, { Toaster } from 'react-hot-toast';
 import icon_black from '../assets//Descriptive/heart_black.png';
 import icon_white from '../assets/Descriptive/heart_white.png';
 import icon_plus from '../assets/Descriptive/plus.png';
 import icon_drop from '../assets/Descriptive/drop_down.png';
-import go_back from '../assets/Descriptive/back.png';
 import Gif_loader from '../assets/Descriptive/loaderGif.gif';
 import calender_icon from '../assets/Descriptive/calendar.png';
 import camera_icon from '../assets/Descriptive/camera2.png';
@@ -26,29 +24,47 @@ const Descriptive = () => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [loading, setLoading] = useState(true);
-    const location = useLocation();
+    const [photos, setPhotos] = useState([]);
+    const [shareDropdown, setShareDropdown] = useState(false);
     const navigate = useNavigate();
     const client_id = process.env.REACT_APP_CLIENT_ID;
 
 
 
     useEffect(() => {
-        if (location.state && location.state.photo) {
-            setPhoto(location.state.photo);
-        } else {
-            fetch(`https://api.unsplash.com/photos/${id}?client_id=${client_id}`)
-                .then(response => response.json())
-                .then(data => setPhoto(data))
-                .catch(error => console.error("Error fetching photo details:", error));
-            setLoading(false)
-        }
-    }, [id, location.state]);
+        fetchPhotoDetails();
+        fetchRandomPhotos();
+    }, [id]);
 
+    const fetchPhotoDetails = () => {
+        fetch(`https://api.unsplash.com/photos/${id}?client_id=${client_id}`)
+            .then(response => response.json())
+            .then(data => {
+                setPhoto(data);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching photo details:", error);
+                setLoading(false);
+            });
+    };
+
+    const fetchRandomPhotos = () => {
+        fetch(`https://api.unsplash.com/photos/random?count=12&client_id=${client_id}`)
+            .then(response => response.json())
+            .then(data => {
+                setPhotos(data);
+                window.scrollTo(0, 0);
+            })
+            .catch(error => {
+                console.error("Error fetching random photos:", error);
+            });
+    };
 
 
     const handleChange = () => {
         setIsFocused(!isFocused);
-       toast("Here is Toast");
+        toast("You Liked the image");
     }
 
     const handleDownload = (size) => {
@@ -62,6 +78,10 @@ const Descriptive = () => {
         link.click();
         setDropdownVisible(false);
     };
+
+    const toggleShareDropdown = () => {
+        setShareDropdown(!shareDropdown);
+    }
 
     const toggleButtonHandle = () => {
         setDropdownVisible(!dropdownVisible);
@@ -78,14 +98,15 @@ const Descriptive = () => {
             collection.push(photo.id);
             localStorage.setItem('imageCollection', JSON.stringify(collection));
             toast.success("Image added to collection");
+            console.log("Plus button clicked", handleAddToCollection);
         } else {
             toast("Image is already in the collection");
         }
     };
-    console.log("Plus button clicked", handleAddToCollection);
 
 
     if (!photo) {
+        console.log('photo is clciked');
         return <img src={Gif_loader} className="loaders_gif" />;
     }
     if (loading) {
@@ -93,8 +114,9 @@ const Descriptive = () => {
         return <img src={Gif_loader} className="gif_loader" />
     }
 
-    const date = new Date(photo.created_at);
 
+
+    const date = new Date(photo.created_at);
     const day = date.getDate();
     const month = date.toLocaleString('en-GB', { month: 'short' });
     const year = date.getFullYear();
@@ -102,10 +124,8 @@ const Descriptive = () => {
 
     return (
         <div>
-            <Header />
-            <button></button>
+            <Header showCategoryList={false} />
             <div className="inside_image">
-                <img src={go_back} onClick={() => navigate(-1)} alt="Go back" className="back_icon" />
                 {photo ? (
                     <>
                         <div className="div_user">
@@ -155,9 +175,20 @@ const Descriptive = () => {
                                     <p>{photo.user.total_photos || "No Data Available"}</p>
                                 </div>
 
-                                <div className="share_icon">
-                                    <img src={share_icon} alt="share_icon" />&nbsp;&nbsp;
-                                    <p>Share</p>
+                                <div className="share_icon" onClick={toggleShareDropdown}>
+                                    <div style={{ display: "flex", textAlign: "center", marginTop: '-10%' }}>
+                                        <img src={share_icon} alt="share_icon" />&nbsp;&nbsp;
+                                        <p>Share</p>
+                                    </div>
+                                    {shareDropdown && (
+                                        <div className="share-dropdown">
+                                            <p>Facebook</p>
+                                            <p>Twitter</p>
+                                            <p>Pinterest</p>
+                                            <p>Email</p>
+                                            <p>Share via</p>
+                                        </div>
+                                    )}
                                 </div>
                                 <div className="info_icon">
                                     <img src={info_icon} alt="info_details" />&nbsp;&nbsp;
@@ -198,6 +229,17 @@ const Descriptive = () => {
                 ) : (
                     <p>No photo data available</p>
                 )}
+            </div>
+            <h1>Explore more Images</h1>
+            <div className="image-grid">
+                {photos.map((image) => (
+                    <div key={image.id} onClick={() => navigate(`/descriptive/${image.id}`)}>
+                        <img
+                            src={image.urls.small}
+                            alt={image.alt_description}
+                            className="grid-images" />
+                    </div>
+                ))}
             </div>
             <Toaster />
         </div>

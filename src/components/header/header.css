@@ -1,18 +1,18 @@
 .back {
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .imglogo {
     margin-top: 0px;
-	width: 2.5%;
-	margin-left: 2%;
+    width: 2.5%;
+    margin-left: 2%;
 }
 
 .search_box {
-	margin-top: 1%;
+    margin-top: 1%;
     display: flex;
-	align-items: center;
+    align-items: center;
     width: 55%;
     margin-left: 1%;
     align-items: center;
@@ -28,7 +28,7 @@
 
 .input {
     padding: 5px;
-	width: 40em;
+    width: 40em;
     background: transparent;
     border: 0;
     outline: 0;
@@ -47,7 +47,7 @@
 .search_box.focused {
     background: white;
     border: 1px solid rgb(173, 173, 173);
-    
+
 }
 
 /***** DropDown ***/
@@ -238,27 +238,201 @@
 }
 
 /**** Unsplash + *****/
-.unsplash_plus{
-	margin-top: 1%;
-	margin-left: 3%;
+.header_component{
+    display: flex;
+    align-items: center;
+    margin-top: 1%;
+    gap: 30px;
 }
 
-.submit_image{
-	margin-left: 2%;
-	margin-top: 1%;
-	border: 1px solid rgb(170, 170, 170);
-	color: rgb(117, 117, 117);
-	border-radius: 5px;
-	padding: 6px;
-	font-size: 13px;
+.unsplash_plus > a{
+    margin-left: 10px;
+    color: #000;
+    cursor: pointer;
+    text-decoration: none;
 }
-.menu_icon{
-	margin-top: 1%;
-	margin-left: 12%;
+
+.submit_image {
+    border: 1px solid rgb(170, 170, 170);
+    color: rgb(117, 117, 117);
+    border-radius: 5px;
+    padding: 6px;
+    font-size: 13px;
+}
+.my_collection{
+    border: 1px solid rgb(170, 170, 170);
+    color: rgb(117, 117, 117);
+    border-radius: 5px;
+    padding: 6px;
+    font-size: 13px;
+}
+.my_collection:hover {
+    color: #000;
+    cursor: pointer;
+    transition: 0.5s;
+    border: 1px solid black;
+}
+
+/***** UnSplash Menu Bar *****/
+.menu_container {
+    position: relative;
+    margin-left: 4%;
+    margin-top: 1%;
+}
+
+.dropdown_menu {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: white;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    border-radius: 10px;
+    padding: 20px;
+    width: 35em;
+}
+    
+
+.dropdown_menu .menu_header {
+    display: flex;
+    flex-direction: row;
+    gap: 8%;
+}
+
+.dropdown_menu .menu_header div {
+    margin-bottom: 20px;
+}
+
+
+.company img,
+.product img,
+.community img {
+    width: 20px;
+}
+
+.dropdown_menu .company_para {
+    margin-top: 10px;
+    padding-left: 30px;
+}
+
+.dropdown_menu .company_para p {
+    margin: 15px 0;
+    color: #818181;
+}
+.company_para p > a{
+    color:#818181;
+    text-decoration: none;
+}
+.company_para p > a:hover{
+    color: black;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+
+
+.dropdown_menu .product_para {
+    margin-top: 10px;
+    padding-left: 30px;
+}
+
+.dropdown_menu .product_para p {
+    margin: 15px 0;
+    color: #818181;
+}
+.product_para p > a{
+    color:#818181;
+    text-decoration: none;
+}
+.product_para p >a:hover{
+    transition: 0.3s;
+    color: black;
+    cursor: pointer;
+}
+
+.hr_drop{
+    position: absolute;
+    width: 100%;
+    left: 0px;
+}
+
+.dropdown_menu .community_para {
+    margin-top: 10px;
+    padding-left: 30px;
+}
+
+.dropdown_menu .community_para p {
+    margin: 15px 0;
+    color: #818181;
+}
+.community_para p > a{
+    color:#818181;
+    text-decoration: none;
+}
+.community_para p > a:hover{
+    color: black;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.menu_down{
+    display: flex;
+    align-items: center;
+    gap: 5%;
+    margin-top: 2%;
+    font-size: 15px;
+}
+.menu_down p > a{
+    text-decoration: none;
+    color: #818181;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.menu_down p > a:hover{
+    color: #000;
+}
+
+
+/***** Categoery *****/
+.categoery {
+    display: flex;
+    align-items: center;
+    gap: 2%;
+    margin-top: 2%;
+    margin-left: 1%;
+    color: #818181;
+}
+
+.hr_tag {
+    width: 0px;
+    height: 25px;
+}
+
+.main_categoery {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.main_categoery p,
+.categoery>p {
+    cursor: pointer;
+    padding: 5px 0;
+    margin: 0;
+}
+
+.main_categoery p:hover,
+.categoery>p:hover {
+    color: black;
+}
+
+.active {
+    color: black;
+    border-bottom: 2px solid black;
 }
 
 @media (max-width: 768px) {
-	.header-input {
-		width: 150px;
-	}
+    .header-input {
+        width: 150px;
+    }
 }

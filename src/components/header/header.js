@@ -2,26 +2,19 @@ import React, { useState } from "react";
 import "./header.css";
 import Logo from '../assets/Header/unsplash.png';
 import menu from '../assets/Header/menu.png';
-// import visual from '../assets/Header/visual-search.png';
 import search from '../assets/Header/search-b.png';
-import Growth from '../assets/Header/growth-icon.png';
-import img1 from '../assets/Header/img1.jpg';
-import img2 from '../assets/Header/img2.jpg';
-import img3 from '../assets/Header/img3.jpg';
-import img4 from '../assets/Header/img4.jpg';
-import { Link } from 'react-router-dom';
-import Gallery from "../gallery/Gallery.js";
+import company_icon from '../assets/Header/company.png';
+import product_icon from '../assets/Header/product.png';
+import community_icon from '../assets/Header/community.png';
+import { useNavigate, Link } from "react-router-dom";
 
 
-
-const Header = () => {
+const Header = ({ onSearch, showCategoryList=true }) => {
 	const [query, setQuery] = useState("");
-	const [photos, setPhotos] = useState([]);
-	const [loading, setLoading] = useState(false);
 	const [isFocused, setIsFocused] = useState(false);
-	const [isSearchPerformed, setIsSearchPerformed] = useState(false);
-
-	const client_id = process.env.REACT_APP_CLIENT_ID;
+	const [activeCategory, setActiveCategory] = useState('Editorial');
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const selecthandler = () => {
 		setIsFocused(true);
@@ -29,26 +22,25 @@ const Header = () => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
-		setLoading(true);
-
-		fetch(`https://api.unsplash.com/search/photos?query=${query}&client_id=${client_id}&per_page=20`)
-			.then((response) => response.json())
-			.then((data) => {
-				if (data.results) {
-					setPhotos(data.results || []);
-					setIsSearchPerformed(true);
-					setLoading(false);
-					console.log("Search query data Feteched", data.results);
-				}
-			})
-			.catch((error) => {
-				console.error("Error fetching photos:", error);
-				setLoading(false);
-			});
-
+		onSearch(query);
 		setQuery("");
-
+		setIsFocused(false);
+		setActiveCategory('');
 	};
+
+	const handleCategoryClick = (category) => {
+		onSearch(category);
+		setActiveCategory(category);
+	}
+
+	const handleEditorialClick = () => {
+		onSearch('random');
+		setActiveCategory('Editorial');
+	}
+
+	const toggleMenu = () => {
+		setIsMenuOpen(!isMenuOpen);
+	}
 
 	return (
 		<>
@@ -65,78 +57,86 @@ const Header = () => {
 							onClick={selecthandler}
 							placeholder='Search photos and illustrations' />
 					</form>
-					{/* <Link to='https://unsplash.com/plus'><img src={visual} alt="" /></Link> */}
 				</div>
-				<p className="unsplash_plus">Get Unsplash+</p>
+				<div className="header_component">
+				<p className="unsplash_plus"><Link to={'https://unsplash.com/plus'}>Get Unsplash+</Link></p>
 				<p className="submit_image">Submit an image</p>
-				<img src={menu} alt="Menu" className="menu_icon" />
+				<p className="my_collection" onClick={() => navigate('/collection')}>My Collection</p>
+				</div>
+				<div className="menu_container">
+					<img src={menu} alt="Menu" className="menu_icon" onClick={toggleMenu} />
+					{isMenuOpen && (
+						<div className="dropdown_menu">
+							<div className="menu_header">
+								<div className="company">
+									<div style={{ display: "flex", alignItems: "center", fontWeight: 600 }}>
+										<img src={company_icon} alt="Company icon" />&nbsp;&nbsp;
+										<p>Company</p>
+									</div>
+									<div className="company_para">
+										<p><Link to={'https://unsplash.com/about'}>About</Link></p>
+										<p><Link to={'https://unsplash.com/history'}>History</Link></p>
+										<p><Link to={'https://unsplash.com/hiring'}>Join the team</Link></p>
+										<p><Link to={'https://unsplash.com/blog'}>Blog</Link></p>
+										<p><Link to={'https://unsplash.com/press'}>Press</Link></p>
+										<p><Link to={'https://unsplash.com/contact-us'}>Contact us</Link></p>
+										<p><Link to={'https://help.unsplash.com/en?utm_medium=referral&utm_source=unsplash'}>Help Center</Link></p>
+									</div>
+								</div>
+								<div className="product">
+									<div style={{ display: "flex", alignItems: "center", fontWeight: 600 }}>
+										<img src={product_icon} alt="Product icon" />&nbsp;&nbsp;
+										<p>Product</p>
+									</div>
+									<div className="product_para">
+										<p><Link to={'https://unsplash.com/developers'}>Developers/API</Link></p>
+										<p><Link to={'https://unsplash.com/data'}>Unsplash Dataset</Link></p>
+										<p><Link to={'https://apps.apple.com/us/app/unsplash/id1290631746?ls=1&utm_medium=referral&utm_source=unsplash'}>Unsplash for IOS</Link></p>
+										<p><Link to={'https://unsplash.com/apps'}>Apps & Plugins</Link></p>
+									</div>
+								</div>
+								<div className="community">
+									<div style={{ display: "flex", alignItems: "center", fontWeight: 600 }}>
+										<img src={community_icon} alt="community icon" />&nbsp;&nbsp;
+										<p>Community</p>
+									</div>
+									<div className="community_para">
+										<p><Link to={"https://unsplash.com/community"}>Become a Contributor</Link></p>
+										<p><Link to={'https://unsplash.com/t'}>Topics</Link></p>
+										<p><Link to={'https://unsplash.com/collections'}>Collections</Link></p>
+										<p><Link to={'https://unsplash.com/trends'}>Trends</Link></p>
+										<p><Link to={'https://unsplash.com/awards'}>Unsplash Awards</Link></p>
+										<p><Link to={'https://unsplash.com/stats'}>Stats</Link></p>
+									</div>
+								</div>
+							</div>
+							<hr className="hr_drop" />
+							<div className="menu_down">
+								<p><Link to={'https://unsplash.com/license'}>License</Link></p>
+								<p><Link to={'https://unsplash.com/privacy'}>Privacy Policy</Link></p>
+								<p><Link to={'https://unsplash.com/terms'}>Terms</Link></p>
+								<p><Link to={'https://unsplash.com/secuity'}>Security</Link></p>
+							</div>
+						</div>
+					)}
+				</div>
 			</div>
-
-			{isFocused && (
-				<div className='searchdrop'>
-
-					<p className='trending'>Trending Searches</p>
-					<div className='displayfix'>
-
-						<div className='box1'>
-							<img src={Growth} alt="" />&nbsp;
-							<p>event</p>
-						</div>
-
-						<div className='box2'>
-							<img src={Growth} alt="" />&nbsp;
-							<p>boys</p>
-						</div>
-
-						<div className='box3'>
-							<img src={Growth} alt="" />&nbsp;
-							<p>music</p>
-						</div>
-
-						<div className='box4'>
-							<img src={Growth} alt="" />&nbsp;
-							<p>value</p>
-						</div>
-
+			{showCategoryList && (
+				<div className="categoery">
+					<p className={activeCategory === 'Editorial' ? 'active' : ''}
+						onClick={() => handleEditorialClick()}>Editorial</p>
+					<hr className="hr_tag" />
+					<div className="main_categoery">
+						{["Wallpaper", "Nature", "3D Renders", "Travel", "Textures & Patterns", "Film", "Archival", "Experiment", "Animals", "People", "Business & Work", "Food & Drink", "Sports"].map(category => (
+							<p key={category}
+								onClick={() => handleCategoryClick(category)}
+								className={activeCategory === category ? 'active' : ''}>{category}</p>
+						))}
 					</div>
-
-					<p className='trendingTopic'>Trending Topics</p>
-					<div className='imgboxfix'>
-
-						<Link to="https://unsplash.com/t/animals"><div className='imgbox1'>
-							<img src={img1} alt="" />
-							<p>Animals</p>
-						</div></Link>
-
-						<div className='imgbox2'>
-							<img src={img2} alt="" />
-							<p>Goals</p>
-						</div>
-
-						<div className='imgbox3'>
-							<img src={img3} alt="" />
-							<p>Travel</p>
-						</div>
-
-						<div className='imgbox4'>
-							<img src={img4} alt="" />
-							<p>Foods</p>
-						</div>
-
-					</div>
-
 				</div>
 			)}
 
-			{/* <App isSearchPerformed={isSearchPerformed}/> */}
-			{isSearchPerformed && (
-				<Gallery
-					photos={photos}
-					loading={loading}
-					isSearchPerformed={isSearchPerformed}
-				/>)}
-
-
+<hr />
 		</>
 	);
 };
