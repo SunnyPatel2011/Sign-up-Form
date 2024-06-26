@@ -136,7 +136,6 @@ const Header = ({ onSearch, showCategoryList=true, onUploadClick }) => {
 				</div>
 			)}
 
-{/* <hr /> */}
 		</div>
 	);
 };

@@ -21,16 +21,16 @@ import facebook from '../assets/Descriptive/facebook.png';
 import twitter from '../assets/Descriptive/twitter.png';
 import pinterest from '../assets/Descriptive/pinterest.png';
 import email from '../assets/Descriptive/email.png';
+import download_icon from '../assets/Header/download.png';
 import verified_tik from '../assets/Descriptive/verified_tik.png';
 
 
 const Descriptive = () => {
-    const { id } = useParams();
     const [isFocused, setIsFocused] = useState(false);
     const [isPlusFocused, setIsPlusFocused] = useState(false);
     const [photo, setPhoto] = useState(null);
     const [dropdownVisible, setDropdownVisible] = useState(false);
-    const [isFullScreen, setIsFullScreen] = useState(false);
+    const { id } = useParams();
     const [loading, setLoading] = useState(true);
     const [isReport, setIsreport] = useState(false);
     const [photos, setPhotos] = useState([]);
@@ -56,18 +56,29 @@ const Descriptive = () => {
             });
     };
 
-    const fetchRandomPhotos = () => {
-        fetch(`https://api.unsplash.com/photos/random?count=12&client_id=${client_id}&orientation=squarish`)
-            .then(response => response.json())
-            .then(data => {
-                setPhotos(data);
-                window.scrollTo(0, 0);
-            })
-            .catch(error => {
-                console.error("Error fetching random photos:", error);
-            });
+    const fetchRandomPhotos = async () => {
+        try {
+            setLoading(true);
+            const orientation = ['portrait', 'landscape', 'squarish'];
+            const promises = orientation.map(orientation =>
+                axios.get(`https://api.unsplash.com/photos/random`, {
+                    params: {
+                        count: 10,
+                        client_id: client_id,
+                        orientation: orientation
+                    }
+                }).then(response => response.data)
+            );
+            const results = await Promise.all(promises);
+            const photos = results.flat();
+            setPhotos(photos);
+            setLoading(false);
+            console.log(photos);
+        } catch (error) {
+            console.error("Error fetching photos", error);
+            setLoading(false);
+        }
     };
-
 
     //// Download image Function ////
 
@@ -93,11 +104,6 @@ const Descriptive = () => {
 
     const handleChange = () => {
         setIsFocused(!isFocused);
-    }
-
-    const toggleFullScreen = () => {
-        console.log('image is clicked for full screen');
-        setIsFullScreen(!isFullScreen);
     }
 
     const toggleReport = () => {
@@ -189,8 +195,10 @@ const Descriptive = () => {
 
                         <div>
                             <img src={photo.urls.small} alt={photo.alt_description}
-                                onClick={toggleFullScreen}
-                                className={`main_image ${isFullScreen ? 'full_screen' : ''}`} />
+                                // onClick={toggleFullScreen}
+                                // className={`main_image ${isFullScreen ? 'full_screen' : ''}`} 
+                                className="main_image"
+                            />
 
                             {/* After Image Component */}
 
@@ -199,10 +207,13 @@ const Descriptive = () => {
                                     <p className="views_para">Views</p>
                                     <p>{photo.views || "No description available"}</p>
                                 </div>
-                                <div className="download">
+
+                                <div className="download-f">
                                     <p className="download_para">Downloads</p>
-                                    <p>{photo.downloads}</p>
+                                    <p>{photo.downloads || "No downloads available"}</p>
                                 </div>
+
+
                                 <div className="camera">
                                     <p className="camera_para">{photo.user.first_name} Clicked</p>
                                     <p>{photo.user.total_photos || "No Data Available"}</p>
@@ -287,13 +298,42 @@ const Descriptive = () => {
 
             <h1>Explore more Images</h1>
 
-            <div className="image-grid">
+            <div className="image-grid_column">
                 {photos.map((image) => (
-                    <div key={image.id} onClick={() => navigate(`/descriptive/${image.id}`)}>
+                    <div key={image.id}
+                        onClick={() => navigate(`/descriptive/${image.id}`)}
+                        className="image-container">
                         <img
                             src={image.urls.small}
                             alt={image.alt_description}
-                            className="grid-images" />
+                            className="image_grid_columm"
+                        />
+
+                        <img src={plus_black}
+                            alt="plus_icon" className="plus_down_design"
+                            onClick={handleAddToCollection} />
+
+                        <img src={image.user.profile_image.medium}
+                            alt="user_profile"
+                            className="descriptive_userimage" />
+
+                        <p className="descriptive_username">{image.user.first_name}</p>
+
+                        {image.user.for_hire && (
+                            <div className="for-hire">
+                                <p>Available for hire</p>
+                                <img src={verified_tik} alt="Verified Tik" className="verified-tik" />
+                            </div>
+                        )}
+
+                        <img
+                            src={download_icon}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleDownload(image.links.download, image.alt_description);
+                            }}
+                            alt='download'
+                            className="download_image" />
                     </div>
                 ))}
             </div>

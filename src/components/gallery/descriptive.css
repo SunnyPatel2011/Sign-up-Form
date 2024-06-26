@@ -151,20 +151,6 @@
     margin-top: 2%;
 }
 
-.main_image:hover {
-    cursor: zoom-in;
-}
-
-.main_image.full_screen {
-    position: absolute;
-    top: 0;
-    margin-left: 0%;
-    width: 100%;
-    height: 220%;
-    cursor: zoom-out;
-}
-
-
 .all_details {
     display: flex;
     align-items: center;
@@ -181,8 +167,8 @@
 }
 
 
-.download {
-    margin-left: 9%;
+.download-f {
+    margin-left: 4%;
     margin-top: 7%;
 }
 
@@ -192,7 +178,7 @@
 }
 
 .camera {
-    margin-left: 9%;
+    margin-left: 4%;
     margin-top: 7%;
 }
 
@@ -218,7 +204,7 @@
 
 .share_icon {
     margin-top: 7%;
-    margin-left: 53%;
+    margin-left: 50%;
     color: #8b8b8b;
     border: 1px solid #8b8b8b;
     padding: 12px;
@@ -388,22 +374,100 @@ h1 {
     margin-top: 4%;
 }
 
-.image-grid {
+.image-grid_column {
     width: 95%;
-    padding: 40px 0px 0px 50px;
-    background-color: #fff;
-    columns: 3;
-    column-gap: 20px;
+	padding: 40px 0px 0px 50px;
+	background-color: #fff;
+	columns: 3;
+	column-gap: 20px;
 }
 
-.grid-images {
+.image_grid_columm{
     width: 100%;
     height: 100%;
     object-fit: cover;
     margin-bottom: 20px;
     cursor: pointer;
 }
+.descriptive_userimage{
+    position: absolute;
+	bottom: 40px;
+	right: 80%;
+	width: 40px;
+	border-radius: 50px;
+	cursor: pointer;
+	display: none;
+}
+.descriptive_username{
+    position: absolute;
+	bottom: 60px;
+	left: 80px;
+	color: white;
+	font-weight: 500;
+	border-radius: 7px;
+	padding: 5px 10px;
+	cursor: pointer;
+	display: none;
+}
+.plus_down_design{
+    position: absolute;
+	bottom: 90%;
+	right: 30px;
+	background-color: white;
+    padding: 25px;
+	font-weight: 500;
+	border-radius: 7px;
+	padding: 5px 10px;
+	cursor: pointer;
+	display: none;
+}
+.for-hire{
+    position: absolute;
+	bottom: 40px;
+	left: 80px;
+	display: flex;
+	align-items: center;
+	color: white;
+	font-weight: 500;
+	border-radius: 7px;
+	padding: 5px 10px;
+	cursor: pointer;
+	display: none;
+}
+.verified-tik{
+    margin-left: 5px;
+}
+.download_image{
+    position: absolute;
+	bottom: 40px;
+	right: 20px;
+	background-color: rgb(255, 255, 255);
+	border-radius: 7px;
+	padding: 5px 10px;
+	cursor: pointer;
+	display: none;
+}
+.image-container:hover .download_image {
+	display: block;
+}
+.image-container:hover .plus_down_design {
+	display: block;
+}
 
+.image-container:hover .descriptive_userimage {
+	display: block;
+}
+
+.image-container:hover .descriptive_username{
+	display: block;
+}
+
+.image-container:hover .for-hire {
+	display: flex;
+}
+.image-container {
+	position: relative;
+}
 @media (max-width: 1024px) {
 
     .username,

@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./gallery.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import loader from '../assets/Descriptive/loaderGif.gif';
 import download_icon from '../assets/Header/download.png';
 import verified_tik from '../assets/Descriptive/verified_tik.png';
+import Unsplash_img from '../assets/Header/unsplash.png';
 
 const Gallery = ({ photos, loading, isSearchPerformed }) => {
   console.log("header photo fetched", photos);
   const navigate = useNavigate();
+  const [isScroll, setIsScroll] = useState(false);
 
   const handleDownload = (url, altDescription) => {
     const link = document.createElement('a');
@@ -15,9 +17,16 @@ const Gallery = ({ photos, loading, isSearchPerformed }) => {
     link.download = altDescription || 'downloaded-image';
     link.click();
   }
-
+   useEffect(() => {
+    if(photos.length === 0) {
+    setIsScroll(false);
+    }else{
+      setIsScroll(true);
+    }
+   }, [photos]);
 
   return (
+    <>
     <div className="gallery">
       {loading ? (
         <img src={loader} alt="loader_gif" className="loader" />
@@ -58,6 +67,12 @@ const Gallery = ({ photos, loading, isSearchPerformed }) => {
         </>
       )}
     </div>
+          {isScroll && (<div className="unsplash_down" onClick={() => window.scroll(0,0)}>
+            <img src={Unsplash_img} alt="unsplash logo" />
+            <p>Make Something Awesome</p>
+          </div>
+        )}
+          </>
   );
 };
 
