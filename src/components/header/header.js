@@ -34,7 +34,7 @@ const Header = ({ onSearch, showCategoryList=true, onUploadClick }) => {
 	}
 
 	const handleEditorialClick = () => {
-		onSearch('random');
+		onSearch('random images');
 		setActiveCategory('Editorial');
 	}
 
@@ -46,9 +46,9 @@ const Header = ({ onSearch, showCategoryList=true, onUploadClick }) => {
 		<div className="header_background">
 
 			<div className='back'>
-				<img src={Logo} alt="" className='imglogo' />
+				<img src={Logo} alt="unsplah_logo" className='imglogo' />
 				<div className={`search_box ${isFocused ? 'focused' : ''}`}>
-					<img src={search} alt="" />&nbsp;&nbsp;&nbsp;
+					<img src={search} alt="Search_bar" />&nbsp;&nbsp;&nbsp;
 					<form onSubmit={handleSubmit}>
 						<input type="text"
 							className='input'

@@ -12,12 +12,11 @@
 	height: 100%;
 	object-fit: cover;
 	margin-bottom: 20px;
-	cursor: pointer;
+	cursor: zoom-in;
 }
 
 .photo-container {
 	position: relative;
-	cursor: zoom-in;
 }
 
 .download {
@@ -39,7 +38,7 @@
 	font-weight: 500;
 	border-radius: 7px;
 	padding: 5px 10px;
-	cursor: zoom-in;
+	cursor: pointer;
 	display: none;
 }
 
@@ -53,7 +52,7 @@
 	font-weight: 500;
 	border-radius: 7px;
 	padding: 5px 10px;
-	cursor: zoom-in;
+	cursor: pointer;
 	display: none;
 }
 
@@ -67,7 +66,7 @@
 	right: 80%;
 	width: 40px;
 	border-radius: 50px;
-	cursor: zoom-in;
+	cursor: pointer;
 	display: none;
 }
 
@@ -97,17 +96,17 @@
 @media (max-width: 1024px) {
 	.gallery {
 		padding: 80px 8px 0 8px;
-		grid-template-columns: 1fr;
+		columns: 2;
 	}
 
 	.photo-container:hover .download,
 	.gallery_userimage,
-	.gallery_username {
+	.gallery_username,.for-hire,.verified-tik {
 		display: none;
 	}
 }
-@media (max-width: 900px) and (min-width: 200px) {
-    .gallery_username, .gallery_userimage,.for-hire,.verified-tik {
-        display: none;
-    }
+@media (max-width: 400px){
+	.gallery {
+		columns: 1;
+	}
 }

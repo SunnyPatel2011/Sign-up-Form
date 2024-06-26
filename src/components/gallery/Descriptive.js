@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useeffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import './descriptive.css';
+import axios from "axios";
 import toast, { Toaster } from 'react-hot-toast';
 import icon_black from '../assets//Descriptive/heart_black.png';
 import icon_white from '../assets/Descriptive/heart_white.png';
-import icon_plus from '../assets/Descriptive/plus.png';
+import plus_black from '../assets/Descriptive/plus_black.png';
+import plus_white from '../assets/Descriptive/plus_white.png';
 import icon_drop from '../assets/Descriptive/drop_down.png';
 import Gif_loader from '../assets/Descriptive/loaderGif.gif';
 import calender_icon from '../assets/Descriptive/calendar.png';
@@ -25,6 +27,7 @@ import verified_tik from '../assets/Descriptive/verified_tik.png';
 const Descriptive = () => {
     const { id } = useParams();
     const [isFocused, setIsFocused] = useState(false);
+    const [isPlusFocused, setIsPlusFocused] = useState(false);
     const [photo, setPhoto] = useState(null);
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(false);
@@ -42,10 +45,9 @@ const Descriptive = () => {
     }, [id]);
 
     const fetchPhotoDetails = () => {
-        fetch(`https://api.unsplash.com/photos/${id}?client_id=${client_id}`)
-            .then(response => response.json())
-            .then(data => {
-                setPhoto(data);
+        axios.get(`https://api.unsplash.com/photos/${id}?client_id=${client_id}`)
+            .then(response => {
+                setPhoto(response.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -66,14 +68,12 @@ const Descriptive = () => {
             });
     };
 
-    const handleChange = () => {
-        setIsFocused(!isFocused);
-        toast("You Liked the image");
-    }
 
-    const handleDownload = (size) =>{
+    //// Download image Function ////
+
+    const handleDownload = (size) => {
         let url = photo.links.download;
-        if(size) {
+        if (size) {
             url += `&w=${size}`;
         }
         const link = document.createElement('a');
@@ -91,33 +91,40 @@ const Descriptive = () => {
         setDropdownVisible(!dropdownVisible);
     }
 
+    const handleChange = () => {
+        setIsFocused(!isFocused);
+    }
+
     const toggleFullScreen = () => {
         console.log('image is clicked for full screen');
         setIsFullScreen(!isFullScreen);
-    } 
-    
+    }
+
     const toggleReport = () => {
         setIsreport(!isReport);
     }
 
+    //// Plus Icon Function ////
     const handleAddToCollection = () => {
         let collection = JSON.parse(localStorage.getItem('imageCollection')) || [];
-        if(!collection.includes(photo.id)) {
+        if (!collection.includes(photo.id)) {
             collection.push(photo.id);
             localStorage.setItem('imageCollection', JSON.stringify(collection));
+            setIsPlusFocused(true);
             toast.success("Image added to collection");
             console.log('plus button clicked', handleAddToCollection);
-        }else {
+        } else {
             toast("image is already in the collection");
         }
     };
- 
+
+    //// Loader Gif ////
     if (!photo) {
         console.log('photo is clicked')
         return <img src={Gif_loader} className="loaders_gif" />
     }
 
-    if(loading) {
+    if (loading) {
         console.log("loader is clciked");
         return <img src={Gif_loader} alt="gif_loader" />
     }
@@ -130,34 +137,44 @@ const Descriptive = () => {
     const formattedDate = `${month} ${day}, ${year}`;
 
 
-    return(
+    return (
         <div>
             <Header showCategoryList={false} />
             <div className="inside_image">
                 {photo ? (
                     <>
-                    <div className="div_user">
-                        <Link to={photo.user.links.html}>
-                        <img src={photo.user.profile_image.medium} className="profile_img" alt="profile-image"/>
-                        </Link>
-                        <div>
+                        <div className="div_user">
+                            <Link to={photo.user.links.html}>
+                                <img src={photo.user.profile_image.medium} className="profile_img" alt="profile-image" />
+                            </Link>
+                            <div>
                                 <p className="username"><Link to={photo.user.links.html}>{photo.user.name}</Link></p>
                                 <Link to={photo.user.links.html}>{photo.user.for_hire && (
                                     <div className="for-hires">
-                                       <p>Available for hire</p>
+                                        <p>Available for hire</p>
                                         <img src={verified_tik} alt="Verified Tik" className="verified-tiks" />
                                     </div>
                                 )}</Link>
                             </div>
+
+                            {/* Like Icon */}
+
                             <img src={isFocused ? icon_white : icon_black}
                                 className={`icon ${isFocused ? 'icon_change' : ''}`}
                                 alt="toggle icon"
                                 onClick={handleChange} />
-                            <img src={icon_plus} alt="" className="plus_icon" onClick={handleAddToCollection} />
+
+                            {/* Plus Icon */}
+
+                            <img src={isPlusFocused ? plus_white : plus_black}
+                                alt="plus_icon" className={`plus_icon ${isPlusFocused ? 'plus_change' : ''}`}
+                                onClick={handleAddToCollection} />
+
+                            {/* Download Icon  */}
 
                             <button className="download_size" onClick={() => handleDownload()}>Download</button>
                             <div className="dropdown-container">
-                                <img src={icon_drop} alt="" className="drop_icon" onClick={toggleButtonHandle} />
+                                <img src={icon_drop} alt="drop_icon" className="drop_icon" onClick={toggleButtonHandle} />
                                 {dropdownVisible && (
                                     <div className="dropdown-menu">
                                         <button onClick={() => handleDownload(640)}>Small (640w)</button><hr />
@@ -187,9 +204,12 @@ const Descriptive = () => {
                                     <p>{photo.downloads}</p>
                                 </div>
                                 <div className="camera">
-                                    <p className="camera_para">{photo.user.first_name} Clicked Photos</p>
+                                    <p className="camera_para">{photo.user.first_name} Clicked</p>
                                     <p>{photo.user.total_photos || "No Data Available"}</p>
                                 </div>
+
+
+                                {/* Share Icon */}
 
                                 <div className="share_icon" onClick={toggleShareDropdown}>
                                     <div style={{ display: "flex", textAlign: "center", marginTop: '-10%' }}>
@@ -207,11 +227,16 @@ const Descriptive = () => {
                                         </div>
                                     )}
                                 </div>
+
+                                {/* Info Icon */}
+
                                 <div className="info_icon">
                                     <img src={info_icon} alt="info_details" />&nbsp;&nbsp;
                                     <p>Info</p>
                                 </div>
                                 <div>
+
+                                    {/* Action Icon */}
 
                                 </div>
                                 <div className="action_icon" onClick={toggleReport}>
@@ -261,6 +286,7 @@ const Descriptive = () => {
             {/* Rendering Images */}
 
             <h1>Explore more Images</h1>
+
             <div className="image-grid">
                 {photos.map((image) => (
                     <div key={image.id} onClick={() => navigate(`/descriptive/${image.id}`)}>
@@ -271,6 +297,7 @@ const Descriptive = () => {
                     </div>
                 ))}
             </div>
+
             <Toaster />
         </div>
     );

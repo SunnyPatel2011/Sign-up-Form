@@ -48,19 +48,30 @@ function App() {
     };
 
 
-    const handleSearch = (query) => {
+    const handleSearch = async(query) => {
+        try {
         setLoading(true);
-        fetch(`https://api.unsplash.com/search/photos?query=${query}&client_id=${client_id}&per_page=30`)
-            .then(response => response.json())
-            .then(data => {
-                setSearchResults(data.results || []);
+        const orientation = ['portrait', 'landscape', 'squarish'];
+        const promises = orientation.map(orientation => 
+        axios.get(`https://api.unsplash.com/search/photos`, {
+            params: {
+                query: query,
+                client_id: client_id,
+                orientation: orientation,
+                per_page: 30
+            }
+        }).then(response => response.data.results || [])
+    );
+    const results = await Promise.all(promises);
+    const photos = results.flat();
+                setSearchResults(photos);
                 setIsSearchPerformed(true);
                 setLoading(false);
-            })
-            .catch(error => {
+            } 
+             catch (error) {
                 console.error("Error fetching search results:", error);
                 setLoading(false);
-            });
+            };
     };
 
     const toggleUpload = () => {
@@ -82,7 +93,7 @@ function App() {
         },
         {
             path: '/descriptive/:id',
-            element: <Descriptive fetchRandomPhotos={fetchRandomPhotos} photos={photos} setPhotos={setPhotos} />
+            element: <Descriptive />
         },
         {
             path: '/collection',

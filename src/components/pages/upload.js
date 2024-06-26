@@ -4,8 +4,6 @@ import upload_img from '../assets/Header/upload.png';
 
 const Upload = () => {
 
-
-
   return (
     <div className='upload_main'>
       <h4>Submit to Unsplash</h4>
@@ -18,7 +16,7 @@ const Upload = () => {
         id="upload-input"
       />
       <div className='para_img_upload' onClick={() => document.getElementById('upload-input').click()}>
-        <img src={upload_img} alt="" className='img_upload' />
+        <img src={upload_img} alt="upload_image" className='img_upload' />
         <p className='upload_para'>Drag and drop up to 10 photos<br />
           or <span>browse</span> to choose a file
         </p>
