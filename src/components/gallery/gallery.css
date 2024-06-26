@@ -1,31 +1,28 @@
 .gallery {
-	padding: 80px 80px 0 80px;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	grid-gap: 8px;
+	width: 95%;
+	padding: 40px 0px 0px 50px;
+	background-color: #fff;
+	columns: 3;
+	column-gap: 20px;
+	z-index: 999;
 }
 
-/* .grid-images {
-	object-fit: cover;
-	width: 100%;
+.grid-images {
+	width: 50%;
 	height: 100%;
-} */
-
+	object-fit: cover;
+	margin-bottom: 20px;
+	cursor: pointer;
+}
 
 .photo-container {
 	position: relative;
-	cursor: pointer;
+	cursor: zoom-in;
 }
-.grid-images {
-	width: 100%;
-	height: auto;
-	display: block;
-}
-
 
 .download {
 	position: absolute;
-	bottom: 30px;
+	bottom: 40px;
 	right: 20px;
 	background-color: rgb(255, 255, 255);
 	border-radius: 7px;
@@ -34,8 +31,67 @@
 	display: none;
 }
 
+.gallery_username {
+	position: absolute;
+	bottom: 60px;
+	left: 80px;
+	color: white;
+	font-weight: 500;
+	border-radius: 7px;
+	padding: 5px 10px;
+	cursor: zoom-in;
+	display: none;
+}
+
+.for-hire {
+	position: absolute;
+	bottom: 40px;
+	left: 80px;
+	display: flex;
+	align-items: center;
+	color: white;
+	font-weight: 500;
+	border-radius: 7px;
+	padding: 5px 10px;
+	cursor: zoom-in;
+	display: none;
+}
+
+.verified-tik {
+	margin-left: 5px;
+}
+
+.gallery_userimage {
+	position: absolute;
+	bottom: 40px;
+	right: 80%;
+	width: 40px;
+	border-radius: 50px;
+	cursor: zoom-in;
+	display: none;
+}
+
 .photo-container:hover .download {
 	display: block;
+}
+
+.photo-container:hover .gallery_userimage {
+	display: block;
+}
+
+.photo-container:hover .gallery_username {
+	display: block;
+}
+
+.photo-container:hover .for-hire {
+	display: flex;
+}
+.loader {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 140%;
+	margin-top: 25%;
 }
 
 @media (max-width: 1024px) {
@@ -43,12 +99,15 @@
 		padding: 80px 8px 0 8px;
 		grid-template-columns: 1fr;
 	}
-}
 
-.loader {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-left: 140%;
-	margin-top: 25%;
+	.photo-container:hover .download,
+	.gallery_userimage,
+	.gallery_username {
+		display: none;
+	}
+}
+@media (max-width: 900px) and (min-width: 200px) {
+    .gallery_username, .gallery_userimage,.for-hire,.verified-tik {
+        display: none;
+    }
 }

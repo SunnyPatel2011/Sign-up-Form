@@ -9,7 +9,7 @@ import community_icon from '../assets/Header/community.png';
 import { useNavigate, Link } from "react-router-dom";
 
 
-const Header = ({ onSearch, showCategoryList=true }) => {
+const Header = ({ onSearch, showCategoryList=true, onUploadClick }) => {
 	const [query, setQuery] = useState("");
 	const [isFocused, setIsFocused] = useState(false);
 	const [activeCategory, setActiveCategory] = useState('Editorial');
@@ -43,7 +43,7 @@ const Header = ({ onSearch, showCategoryList=true }) => {
 	}
 
 	return (
-		<>
+		<div className="header_background">
 
 			<div className='back'>
 				<img src={Logo} alt="" className='imglogo' />
@@ -60,7 +60,7 @@ const Header = ({ onSearch, showCategoryList=true }) => {
 				</div>
 				<div className="header_component">
 				<p className="unsplash_plus"><Link to={'https://unsplash.com/plus'}>Get Unsplash+</Link></p>
-				<p className="submit_image">Submit an image</p>
+				<p className="submit_image" onClick={onUploadClick}>Submit an image</p>
 				<p className="my_collection" onClick={() => navigate('/collection')}>My Collection</p>
 				</div>
 				<div className="menu_container">
@@ -136,8 +136,8 @@ const Header = ({ onSearch, showCategoryList=true }) => {
 				</div>
 			)}
 
-<hr />
-		</>
+{/* <hr /> */}
+		</div>
 	);
 };
 export default Header;

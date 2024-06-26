@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useeffect } from "react";
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import './descriptive.css';
 import toast, { Toaster } from 'react-hot-toast';
 import icon_black from '../assets//Descriptive/heart_black.png';
@@ -15,6 +15,11 @@ import share_icon from '../assets/Descriptive/share.png';
 import info_icon from '../assets/Descriptive/info.png';
 import action_icon from '../assets/Descriptive/more.png';
 import Header from "../header/header";
+import facebook from '../assets/Descriptive/facebook.png';
+import twitter from '../assets/Descriptive/twitter.png';
+import pinterest from '../assets/Descriptive/pinterest.png';
+import email from '../assets/Descriptive/email.png';
+import verified_tik from '../assets/Descriptive/verified_tik.png';
 
 
 const Descriptive = () => {
@@ -24,11 +29,11 @@ const Descriptive = () => {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [isReport, setIsreport] = useState(false);
     const [photos, setPhotos] = useState([]);
     const [shareDropdown, setShareDropdown] = useState(false);
     const navigate = useNavigate();
     const client_id = process.env.REACT_APP_CLIENT_ID;
-
 
 
     useEffect(() => {
@@ -50,7 +55,7 @@ const Descriptive = () => {
     };
 
     const fetchRandomPhotos = () => {
-        fetch(`https://api.unsplash.com/photos/random?count=12&client_id=${client_id}`)
+        fetch(`https://api.unsplash.com/photos/random?count=12&client_id=${client_id}&orientation=squarish`)
             .then(response => response.json())
             .then(data => {
                 setPhotos(data);
@@ -61,20 +66,19 @@ const Descriptive = () => {
             });
     };
 
-
     const handleChange = () => {
         setIsFocused(!isFocused);
         toast("You Liked the image");
     }
 
-    const handleDownload = (size) => {
+    const handleDownload = (size) =>{
         let url = photo.links.download;
-        if (size) {
+        if(size) {
             url += `&w=${size}`;
         }
         const link = document.createElement('a');
         link.href = `${url}&force=true`;
-        link.download = photo.alt_description || 'downloaded-image';
+        link.download = photo.alt_description || 'download-image';
         link.click();
         setDropdownVisible(false);
     };
@@ -88,55 +92,62 @@ const Descriptive = () => {
     }
 
     const toggleFullScreen = () => {
-        console.log('image clicked for full screen');
+        console.log('image is clicked for full screen');
         setIsFullScreen(!isFullScreen);
+    } 
+    
+    const toggleReport = () => {
+        setIsreport(!isReport);
     }
 
     const handleAddToCollection = () => {
         let collection = JSON.parse(localStorage.getItem('imageCollection')) || [];
-        if (!collection.includes(photo.id)) {
+        if(!collection.includes(photo.id)) {
             collection.push(photo.id);
             localStorage.setItem('imageCollection', JSON.stringify(collection));
             toast.success("Image added to collection");
-            console.log("Plus button clicked", handleAddToCollection);
-        } else {
-            toast("Image is already in the collection");
+            console.log('plus button clicked', handleAddToCollection);
+        }else {
+            toast("image is already in the collection");
         }
     };
-
-
+ 
     if (!photo) {
-        console.log('photo is clciked');
-        return <img src={Gif_loader} className="loaders_gif" />;
-    }
-    if (loading) {
-        console.log("loader is clicked");
-        return <img src={Gif_loader} className="gif_loader" />
+        console.log('photo is clicked')
+        return <img src={Gif_loader} className="loaders_gif" />
     }
 
+    if(loading) {
+        console.log("loader is clciked");
+        return <img src={Gif_loader} alt="gif_loader" />
+    }
 
-    /// DATE /////
+    //// DATE ////
     const date = new Date(photo.created_at);
     const day = date.getDate();
     const month = date.toLocaleString('en-GB', { month: 'short' });
     const year = date.getFullYear();
     const formattedDate = `${month} ${day}, ${year}`;
 
-    return (
+
+    return(
         <div>
             <Header showCategoryList={false} />
             <div className="inside_image">
                 {photo ? (
                     <>
-                        {/* HEADER PART */}
-
-                        <div className="div_user">
-                            <Link to={photo.user.links.html}>
-                                <img src={photo.user.profile_image.medium} className='profile_img' alt="" />
-                            </Link>
-                            <div>
+                    <div className="div_user">
+                        <Link to={photo.user.links.html}>
+                        <img src={photo.user.profile_image.medium} className="profile_img" alt="profile-image"/>
+                        </Link>
+                        <div>
                                 <p className="username"><Link to={photo.user.links.html}>{photo.user.name}</Link></p>
-                                <p className="bio"><Link to={photo.user.links.html}>{photo.user.location}</Link></p>
+                                <Link to={photo.user.links.html}>{photo.user.for_hire && (
+                                    <div className="for-hires">
+                                       <p>Available for hire</p>
+                                        <img src={verified_tik} alt="Verified Tik" className="verified-tiks" />
+                                    </div>
+                                )}</Link>
                             </div>
                             <img src={isFocused ? icon_white : icon_black}
                                 className={`icon ${isFocused ? 'icon_change' : ''}`}
@@ -186,12 +197,13 @@ const Descriptive = () => {
                                         <p>Share</p>
                                     </div>
                                     {shareDropdown && (
-                                        <div className="share-dropdown">
-                                            <p>Facebook</p>
-                                            <p>Twitter</p>
-                                            <p>Pinterest</p>
-                                            <p>Email</p>
-                                            <p>Share via</p>
+                                        <div
+                                            className="share-dropdown">
+                                            <p><img src={facebook} />Facebook</p>
+                                            <p><img src={twitter} />Twitter</p>
+                                            <p><img src={pinterest} />Pinterest</p>
+                                            <p><img src={email} />Email</p>
+                                            <p><img src={share_icon} />Share via</p>
                                         </div>
                                     )}
                                 </div>
@@ -199,8 +211,16 @@ const Descriptive = () => {
                                     <img src={info_icon} alt="info_details" />&nbsp;&nbsp;
                                     <p>Info</p>
                                 </div>
-                                <div className="action_icon">
+                                <div>
+
+                                </div>
+                                <div className="action_icon" onClick={toggleReport}>
                                     <img src={action_icon} alt="action_details" className="action_image" />
+                                    {isReport && (
+                                        <div className="report-dropdown">
+                                            <p>Report</p>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

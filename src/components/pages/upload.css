@@ -1,0 +1,51 @@
+.upload_main{
+    align-items: center;
+    justify-self: center;
+    width: 60%;
+    background-color: rgb(243, 243, 243);
+    margin-top: 6%;
+    border-radius: 10px;
+    margin-left: 200px;
+    padding: 50px ;
+    border: 1px solid black;
+    z-index:99;
+}
+
+.img_upload {
+    width: 70px;
+}
+
+.para_img_upload {
+    border-style: dotted;
+    padding: 70px;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    flex-direction: column;
+}
+
+.upload_para {
+    font-size: 20px;
+}
+
+.upload_para span {
+    color: rgb(0, 110, 255);
+}
+
+.preview_upload {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.upload_main>p>a {
+    margin-left: 90%;
+    color: rgb(117, 117, 117);
+}
+
+h4 {
+    position: relative;
+    color: rgb(117, 117, 117);
+    font-weight: 500;
+    padding-top: 0px;
+}
