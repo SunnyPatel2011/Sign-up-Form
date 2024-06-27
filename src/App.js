@@ -30,7 +30,7 @@ function App() {
             const promises = orientation.map(orientation => 
                 axios.get(`https://api.unsplash.com/photos/random`, {
                     params: {
-                        count: 20,
+                        count: 30,
                         client_id: client_id,
                         orientation: orientation
                     }
@@ -83,7 +83,8 @@ function App() {
             path: '/',
             element: (
                 <>
-                    <Header onSearch={handleSearch} onUploadClick={toggleUpload} />
+                    <Header onSearch={handleSearch}
+                     onUploadClick={toggleUpload}/>
                     {showUpload && <Upload />}
                     <Gallery photos={isSearchPerformed ? searchResults : photos}
                         loading={loading}

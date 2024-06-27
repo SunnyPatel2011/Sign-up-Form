@@ -42,6 +42,7 @@ const Header = ({ onSearch, showCategoryList=true, onUploadClick }) => {
 		setIsMenuOpen(!isMenuOpen);
 	}
 
+
 	return (
 		<div className="header_background">
 
@@ -121,6 +122,7 @@ const Header = ({ onSearch, showCategoryList=true, onUploadClick }) => {
 					)}
 				</div>
 			</div>
+			
 			{showCategoryList && (
 				<div className="categoery">
 					<p className={activeCategory === 'Editorial' ? 'active' : ''}

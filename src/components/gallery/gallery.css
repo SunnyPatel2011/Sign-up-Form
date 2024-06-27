@@ -85,6 +85,7 @@
 .photo-container:hover .for-hire {
 	display: flex;
 }
+
 .loader {
 	display: flex;
 	align-items: center;

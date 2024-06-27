@@ -111,6 +111,7 @@ const Descriptive = () => {
     }
 
     //// Plus Icon Function ////
+
     const handleAddToCollection = () => {
         let collection = JSON.parse(localStorage.getItem('imageCollection')) || [];
         if (!collection.includes(photo.id)) {
@@ -123,6 +124,7 @@ const Descriptive = () => {
             toast("image is already in the collection");
         }
     };
+
 
     //// Loader Gif ////
     if (!photo) {
@@ -195,8 +197,6 @@ const Descriptive = () => {
 
                         <div>
                             <img src={photo.urls.small} alt={photo.alt_description}
-                                // onClick={toggleFullScreen}
-                                // className={`main_image ${isFullScreen ? 'full_screen' : ''}`} 
                                 className="main_image"
                             />
 
