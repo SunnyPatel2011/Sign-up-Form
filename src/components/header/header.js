@@ -7,9 +7,10 @@ import company_icon from '../assets/Header/company.png';
 import product_icon from '../assets/Header/product.png';
 import community_icon from '../assets/Header/community.png';
 import { useNavigate, Link } from "react-router-dom";
+import HeaderDetails from "./headerDetails";
 
 
-const Header = ({ onSearch, showCategoryList=true, onUploadClick }) => {
+const Header = ({ onSearch, showCategoryList=true,showHeaderdetail = true, onUploadClick }) => {
 	const [query, setQuery] = useState("");
 	const [isFocused, setIsFocused] = useState(false);
 	const [activeCategory, setActiveCategory] = useState('Editorial');
@@ -44,6 +45,7 @@ const Header = ({ onSearch, showCategoryList=true, onUploadClick }) => {
 
 
 	return (
+		<>
 		<div className="header_background">
 
 			<div className='back'>
@@ -139,6 +141,10 @@ const Header = ({ onSearch, showCategoryList=true, onUploadClick }) => {
 			)}
 
 		</div>
+		{ showHeaderdetail && (
+		<HeaderDetails />
+		)}
+		</>
 	);
 };
 export default Header;

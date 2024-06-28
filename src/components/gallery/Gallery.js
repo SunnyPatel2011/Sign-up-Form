@@ -5,17 +5,24 @@ import loader from '../assets/Descriptive/loaderGif.gif';
 import download_icon from '../assets/Header/download.png';
 import verified_tik from '../assets/Descriptive/verified_tik.png';
 import Unsplash_img from '../assets/Header/unsplash.png';
+import Thanks from "../header/Thanks";
 
 const Gallery = ({ photos, loading, isSearchPerformed }) => {
   console.log("header photo fetched", photos);
+
   const navigate = useNavigate();
   const [isScroll, setIsScroll] = useState(false);
+  const [showThanks, setShowThanks] = useState(false);
+  const [downloadPhoto, setDownloadPhoto] = useState(false);
 
-  const handleDownload = (url, altDescription) => {
+  const handleDownload = (url, photo) => {
     const link = document.createElement('a');
     link.href = `${url}&force=true`;
-    link.download = altDescription || 'downloaded-image';
+    link.download = photo.alt_description || 'downloaded-image';
     link.click();
+
+    setDownloadPhoto(photo);
+    setShowThanks(true);
   }
 
   useEffect(() => {
@@ -37,7 +44,7 @@ const Gallery = ({ photos, loading, isSearchPerformed }) => {
 
             {isSearchPerformed && photos.length === 0 && <p>No Such Photos Available</p>}
             {photos.map((photo) => (
-              <div
+              <div 
                 key={photo.id}
                 className="photo-container"
                 onClick={() => navigate(`/descriptive/${photo.id}`)}>
@@ -64,7 +71,7 @@ const Gallery = ({ photos, loading, isSearchPerformed }) => {
                   src={download_icon}
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleDownload(photo.links.download, photo.alt_description);
+                    handleDownload(photo.links.download, photo);
                   }}
                   alt='download'
                   className="download" />
@@ -77,6 +84,9 @@ const Gallery = ({ photos, loading, isSearchPerformed }) => {
         <img src={Unsplash_img} alt="unsplash logo" />
         <p>Make Something Awesome</p>
       </div>
+      )}
+      {showThanks && (
+        <Thanks photo={downloadPhoto} onClose={() => setShowThanks(false)} />
       )}
     </>
   );

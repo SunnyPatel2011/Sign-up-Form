@@ -7,6 +7,7 @@ import Gallery from "./components/gallery/Gallery";
 import Collection from './components/gallery/collection.js';
 import Descriptive from './components/gallery/Descriptive.js';
 import Upload from "./components/pages/upload.js";
+import HeaderDetails from "./components/header/headerDetails.js";
 
 function App() {
     const [photos, setPhotos] = useState([]);
@@ -30,7 +31,7 @@ function App() {
             const promises = orientation.map(orientation => 
                 axios.get(`https://api.unsplash.com/photos/random`, {
                     params: {
-                        count: 30,
+                        count: 1,
                         client_id: client_id,
                         orientation: orientation
                     }
@@ -99,6 +100,10 @@ function App() {
         {
             path: '/collection',
             element: <Collection />
+        },
+        {
+            path: '/headerdetails',
+            element: <HeaderDetails onSearch={handleSearch}/>
         },
     ]);
 

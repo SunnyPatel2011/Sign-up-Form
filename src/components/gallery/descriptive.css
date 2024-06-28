@@ -192,6 +192,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 45%;
+    margin-top: 15%;
 }
 
 .loaders_gif {

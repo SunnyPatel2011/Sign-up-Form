@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import './descriptive.css';
 import axios from "axios";
+import Thanks from "../header/Thanks";
 import toast, { Toaster } from 'react-hot-toast';
 import icon_black from '../assets//Descriptive/heart_black.png';
 import icon_white from '../assets/Descriptive/heart_white.png';
@@ -35,6 +36,8 @@ const Descriptive = () => {
     const [isReport, setIsreport] = useState(false);
     const [photos, setPhotos] = useState([]);
     const [shareDropdown, setShareDropdown] = useState(false);
+    const [showThanks, setShowThanks] = useState(false);
+    const [downloadPhoto, setDownloadPhoto] = useState(false);
     const navigate = useNavigate();
     const client_id = process.env.REACT_APP_CLIENT_ID;
 
@@ -92,6 +95,8 @@ const Descriptive = () => {
         link.download = photo.alt_description || 'download-image';
         link.click();
         setDropdownVisible(false);
+        setDownloadPhoto(photo);
+        setShowThanks(true);
     };
 
     const toggleShareDropdown = () => {
@@ -147,7 +152,7 @@ const Descriptive = () => {
 
     return (
         <div>
-            <Header showCategoryList={false} />
+            <Header showCategoryList={false} showHeaderdetail={false} />
             <div className="inside_image">
                 {photo ? (
                     <>
@@ -339,6 +344,9 @@ const Descriptive = () => {
             </div>
 
             <Toaster />
+            {showThanks && (
+        <Thanks photo={downloadPhoto} onClose={() => setShowThanks(false)} />
+      )}
         </div>
     );
 };
