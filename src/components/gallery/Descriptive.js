@@ -28,7 +28,8 @@ import verified_tik from '../assets/Descriptive/verified_tik.png';
 const Descriptive = () => {
     const [isFocused, setIsFocused] = useState(false);
     const [isPlusFocused, setIsPlusFocused] = useState(false);
-    const [isDropDown,setIsDropDown] = useState(false);
+    const [isDropDown, setIsDropDown] = useState(false);
+    const [activeItem, setActiveItem] = useState('Views');
     const [photo, setPhoto] = useState(null);
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const { id } = useParams();
@@ -85,7 +86,7 @@ const Descriptive = () => {
 
     //// Download image Function ////
 
-    const handleDownload = (url, description, size, photo ) => {
+    const handleDownload = (url, description, size, photo) => {
         let urls = url;
         if (size) {
             urls += `&w=${size}`;
@@ -117,14 +118,15 @@ const Descriptive = () => {
 
     const toggleDropdown = () => {
         setIsDropDown(!isDropDown);
+        console.log("Info clciked");
     };
 
     const handleViewClick = () => {
-        setIsDropDown(false);
+        setActiveItem('Views');
     }
 
     const handleDownloadClick = () => {
-        setIsDropDown(false);
+        setActiveItem('Download');
     }
 
     //// Plus Icon Function ////
@@ -197,13 +199,13 @@ const Descriptive = () => {
 
                             {/* Download Icon  */}
 
-                            <button className="download_size" onClick={() => handleDownload(photo.links.download, photo.alt_description, null,photo)}>Download</button>
+                            <button className="download_size" onClick={() => handleDownload(photo.links.download, photo.alt_description, null, photo)}>Download</button>
                             <div className="dropdown-container">
                                 <img src={icon_drop} alt="drop_icon" className="drop_icon" onClick={toggleButtonHandle} />
                                 {dropdownVisible && (
                                     <div className="dropdown-menu">
-                                        <button onClick={() => handleDownload(photo.links.download, photo.alt_description,640)}>Small (640w)</button><hr />
-                                        <button onClick={() => handleDownload(photo.links.download, photo.alt_description,1080)}>Medium (1080w)</button><hr />
+                                        <button onClick={() => handleDownload(photo.links.download, photo.alt_description, 640)}>Small (640w)</button><hr />
+                                        <button onClick={() => handleDownload(photo.links.download, photo.alt_description, 1080)}>Medium (1080w)</button><hr />
                                         <button onClick={() => handleDownload(photo.links.download, photo.alt_description)}>Original</button>
                                     </div>
                                 )}
@@ -261,18 +263,16 @@ const Descriptive = () => {
                                 <div className="info_icon" onClick={toggleDropdown}>
                                     <img src={info_icon} alt="info_details" />&nbsp;&nbsp;
                                     <p>Info</p>
-                                   {isDropDown && ( 
-                                    <div className='dropdown-content'>
-                                      <div onClick={handleViewClick}>Views</div>
-                                      <div onClick={handleDownloadClick}> Download</div>
-                                    </div>
-                                )}
+                                    {isDropDown && (
+                                        <div className='dropdown-content'>
+                                            <p className={activeItem === 'Views' ? 'active' : ''} onClick={handleViewClick}>Views</p>
+                                            <p className={activeItem === 'Download' ? 'active' : ''} onClick={handleDownloadClick}> Download</p>
+                                        </div>
+                                    )}
                                 </div>
-                                <div>
 
-                                    {/* Action Icon */}
+                                {/* Action Icon */}
 
-                                </div>
                                 <div className="action_icon" onClick={toggleReport}>
                                     <img src={action_icon} alt="action_details" className="action_image" />
                                     {isReport && (
@@ -325,9 +325,9 @@ const Descriptive = () => {
                 {photos.map((image) => (
                     <div key={image.id}
                         onClick={() => {
-                            window.scroll(0,0);
-                             navigate(`/descriptive/${image.id}`);
-                            }}
+                            window.scroll(0, 0);
+                            navigate(`/descriptive/${image.id}`);
+                        }}
                         className="image-container">
                         <img
                             src={image.urls.small}

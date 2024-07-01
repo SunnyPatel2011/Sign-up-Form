@@ -7,6 +7,8 @@ import Gallery from "./components/gallery/Gallery";
 import Collection from './components/gallery/collection.js';
 import Descriptive from './components/gallery/Descriptive.js';
 import Upload from "./components/pages/upload.js";
+import Login from "./components/pages/login.js";
+import SignUp from "./components/pages/signup.js";
 
 function App() {
     const [photos, setPhotos] = useState([]);
@@ -100,6 +102,14 @@ function App() {
             path: '/collection',
             element: <Collection />
         },
+        {
+            path: '/login',
+            element: <Login />
+        },
+        {
+            path: '/signup',
+            element: <SignUp />
+        }
       
     ]);
 
