@@ -6,7 +6,7 @@ import search from '../assets/Header/search-b.png';
 import company_icon from '../assets/Header/company.png';
 import product_icon from '../assets/Header/product.png';
 import community_icon from '../assets/Header/community.png';
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import HeaderDetails from "./headerDetails";
 
 
@@ -15,6 +15,7 @@ const Header = ({ onSearch, showCategoryList=true,showHeaderdetail = true, onUpl
 	const [isFocused, setIsFocused] = useState(false);
 	const [activeCategory, setActiveCategory] = useState('Editorial');
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const location = useLocation();
 	const navigate = useNavigate();
 
 	const selecthandler = () => {
@@ -58,6 +59,7 @@ const Header = ({ onSearch, showCategoryList=true,showHeaderdetail = true, onUpl
 							onChange={(event) => setQuery(event.target.value)}
 							value={query}
 							onClick={selecthandler}
+							readOnly={location.pathname.startsWith('/descriptive')}
 							placeholder='Search photos and illustrations' />
 					</form>
 				</div>

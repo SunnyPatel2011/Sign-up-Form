@@ -28,7 +28,7 @@ function HeaderDetails({ onSearch }) {
         onSearch(query);
         setQuery("");
         setIsFocused(false);
-    };
+    };  
     useEffect(() => {
         const intervalId = setInterval(() => {
             setCurrentIndexImage((prevIndex) => (prevIndex + 1) % images.length);
@@ -57,7 +57,9 @@ function HeaderDetails({ onSearch }) {
                         onChange={(event) => setQuery(event.target.value)}
                         value={query}
                         onClick={selecthandler}
+                        readOnly
                         placeholder='Search photos and illustrations' />
+                        
                 </form>
             </div>
             <div className='image-carousel'>

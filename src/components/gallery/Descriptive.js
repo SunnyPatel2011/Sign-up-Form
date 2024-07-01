@@ -7,7 +7,6 @@ import toast, { Toaster } from 'react-hot-toast';
 import icon_black from '../assets//Descriptive/heart_black.png';
 import icon_white from '../assets/Descriptive/heart_white.png';
 import plus_black from '../assets/Descriptive/plus_black.png';
-import plus_white from '../assets/Descriptive/plus_white.png';
 import icon_drop from '../assets/Descriptive/drop_down.png';
 import Gif_loader from '../assets/Descriptive/loaderGif.gif';
 import calender_icon from '../assets/Descriptive/calendar.png';
@@ -29,6 +28,7 @@ import verified_tik from '../assets/Descriptive/verified_tik.png';
 const Descriptive = () => {
     const [isFocused, setIsFocused] = useState(false);
     const [isPlusFocused, setIsPlusFocused] = useState(false);
+    const [isDropDown,setIsDropDown] = useState(false);
     const [photo, setPhoto] = useState(null);
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const { id } = useParams();
@@ -85,14 +85,14 @@ const Descriptive = () => {
 
     //// Download image Function ////
 
-    const handleDownload = (size) => {
-        let url = photo.links.download;
+    const handleDownload = (url, description, size, photo ) => {
+        let urls = url;
         if (size) {
-            url += `&w=${size}`;
+            urls += `&w=${size}`;
         }
         const link = document.createElement('a');
-        link.href = `${url}&force=true`;
-        link.download = photo.alt_description || 'download-image';
+        link.href = `${urls}&force=true`;
+        link.download = description || 'download-image';
         link.click();
         setDropdownVisible(false);
         setDownloadPhoto(photo);
@@ -113,6 +113,18 @@ const Descriptive = () => {
 
     const toggleReport = () => {
         setIsreport(!isReport);
+    }
+
+    const toggleDropdown = () => {
+        setIsDropDown(!isDropDown);
+    };
+
+    const handleViewClick = () => {
+        setIsDropDown(false);
+    }
+
+    const handleDownloadClick = () => {
+        setIsDropDown(false);
     }
 
     //// Plus Icon Function ////
@@ -137,10 +149,10 @@ const Descriptive = () => {
         return <img src={Gif_loader} className="loaders_gif" />
     }
 
-    if (loading) {
-        console.log("loader is clciked");
-        return <img src={Gif_loader} alt="gif_loader" />
-    }
+    // if (loading) {
+    //     console.log("loader is clciked");
+    //     return <img src={Gif_loader} alt="gif_loader" />
+    // }
 
     //// DATE ////
     const date = new Date(photo.created_at);
@@ -179,20 +191,20 @@ const Descriptive = () => {
 
                             {/* Plus Icon */}
 
-                            <img src={isPlusFocused ? plus_white : plus_black}
-                                alt="plus_icon" className={`plus_icon ${isPlusFocused ? 'plus_change' : ''}`}
+                            <img src={plus_black}
+                                alt="plus_icon" className='plus_icon'
                                 onClick={handleAddToCollection} />
 
                             {/* Download Icon  */}
 
-                            <button className="download_size" onClick={() => handleDownload()}>Download</button>
+                            <button className="download_size" onClick={() => handleDownload(photo.links.download, photo.alt_description, null,photo)}>Download</button>
                             <div className="dropdown-container">
                                 <img src={icon_drop} alt="drop_icon" className="drop_icon" onClick={toggleButtonHandle} />
                                 {dropdownVisible && (
                                     <div className="dropdown-menu">
-                                        <button onClick={() => handleDownload(640)}>Small (640w)</button><hr />
-                                        <button onClick={() => handleDownload(1080)}>Medium (1080w)</button><hr />
-                                        <button onClick={() => handleDownload()}>Original</button>
+                                        <button onClick={() => handleDownload(photo.links.download, photo.alt_description,640)}>Small (640w)</button><hr />
+                                        <button onClick={() => handleDownload(photo.links.download, photo.alt_description,1080)}>Medium (1080w)</button><hr />
+                                        <button onClick={() => handleDownload(photo.links.download, photo.alt_description)}>Original</button>
                                     </div>
                                 )}
                             </div>
@@ -246,9 +258,15 @@ const Descriptive = () => {
 
                                 {/* Info Icon */}
 
-                                <div className="info_icon">
+                                <div className="info_icon" onClick={toggleDropdown}>
                                     <img src={info_icon} alt="info_details" />&nbsp;&nbsp;
                                     <p>Info</p>
+                                   {isDropDown && ( 
+                                    <div className='dropdown-content'>
+                                      <div onClick={handleViewClick}>Views</div>
+                                      <div onClick={handleDownloadClick}> Download</div>
+                                    </div>
+                                )}
                                 </div>
                                 <div>
 
@@ -306,7 +324,10 @@ const Descriptive = () => {
             <div className="image-grid_column">
                 {photos.map((image) => (
                     <div key={image.id}
-                        onClick={() => navigate(`/descriptive/${image.id}`)}
+                        onClick={() => {
+                            window.scroll(0,0);
+                             navigate(`/descriptive/${image.id}`);
+                            }}
                         className="image-container">
                         <img
                             src={image.urls.small}
@@ -314,28 +335,27 @@ const Descriptive = () => {
                             className="image_grid_columm"
                         />
 
-                        <img src={plus_black}
-                            alt="plus_icon" className="plus_down_design"
-                            onClick={handleAddToCollection} />
 
-                        <img src={image.user.profile_image.medium}
-                            alt="user_profile"
-                            className="descriptive_userimage" />
+                        <Link to={image.user.links.html}
+                            onClick={(e) => e.stopPropagation()}>
+                            <img src={image.user.profile_image.medium}
+                                alt="user_profile"
+                                className="descriptive_userimage" />
 
-                        <p className="descriptive_username">{image.user.first_name}</p>
+                            <p className="descriptive_username">{image.user.first_name}</p>
 
-                        {image.user.for_hire && (
-                            <div className="for-hire">
-                                <p>Available for hire</p>
-                                <img src={verified_tik} alt="Verified Tik" className="verified-tik" />
-                            </div>
-                        )}
+                            {image.user.for_hire && (
+                                <div className="for-hire">
+                                    <p>Available for hire</p>
+                                    <img src={verified_tik} alt="Verified Tik" className="verified-tik" />
+                                </div>
+                            )}</Link>
 
                         <img
                             src={download_icon}
                             onClick={(e) => {
                                 e.stopPropagation();
-                                handleDownload(image.links.download, image.alt_description);
+                                handleDownload(image.links.download, image.alt_description, 1080, image);
                             }}
                             alt='download'
                             className="download_image" />
@@ -345,8 +365,8 @@ const Descriptive = () => {
 
             <Toaster />
             {showThanks && (
-        <Thanks photo={downloadPhoto} onClose={() => setShowThanks(false)} />
-      )}
+                <Thanks photo={downloadPhoto} onClose={() => setShowThanks(false)} />
+            )}
         </div>
     );
 };

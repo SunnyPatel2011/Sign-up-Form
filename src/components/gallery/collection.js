@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './collection.css';
+import trash from '../assets/Descriptive/trash.png';
 
 const Collection = () => {
     const [collection, setCollection] = useState([]);
@@ -19,13 +20,21 @@ const Collection = () => {
                     );
                     const results = await Promise.all(promises);
                     setImages(results);
-                } catch (error) {
+                    console.log(results);
+                    } catch (error) {
                     console.error("Error fetching image details:", error);
                 }
             };
             fetchImages();
         }
     }, [client_id]);
+
+    const removeImage = (id) => {
+        const updateCollection = collection.filter(imageId => imageId !== id);
+        setCollection(updateCollection);
+        setImages(images.filter(image => image.id !== id));
+        localStorage.setItem('imageCollection', JSON.stringify(updateCollection));
+    };
 
     return (
         <div>
@@ -39,6 +48,10 @@ const Collection = () => {
                                 alt={image.alt_description}
                                 className='grid-images'
                             />
+                            <img src={trash}
+                                alt="trash" className="trash_design"
+                                onClick={() => removeImage(image.id)}
+                            />
                         </div>
                     ))
                 ) : (
@@ -50,3 +63,6 @@ const Collection = () => {
 };
 
 export default Collection;
+
+
+

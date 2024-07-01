@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./gallery.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import loader from '../assets/Descriptive/loaderGif.gif';
 import download_icon from '../assets/Header/download.png';
 import verified_tik from '../assets/Descriptive/verified_tik.png';
@@ -33,7 +33,7 @@ const Gallery = ({ photos, loading, isSearchPerformed }) => {
     }
   }, [photos]);
 
- 
+
   return (
     <>
       <div className="gallery">
@@ -44,7 +44,7 @@ const Gallery = ({ photos, loading, isSearchPerformed }) => {
 
             {isSearchPerformed && photos.length === 0 && <p>No Such Photos Available</p>}
             {photos.map((photo) => (
-              <div 
+              <div
                 key={photo.id}
                 className="photo-container"
                 onClick={() => navigate(`/descriptive/${photo.id}`)}>
@@ -54,11 +54,13 @@ const Gallery = ({ photos, loading, isSearchPerformed }) => {
                   className="grid-images"
                 />
 
-                <img src={photo.user.profile_image.medium}
-                  alt="user_profile"
-                  className="gallery_userimage" />
-
-                <p className="gallery_username">{photo.user.first_name}</p>
+                <Link to={photo.user.links.html}
+                  onClick={(e) => e.stopPropagation()}>
+                  <img src={photo.user.profile_image.medium}
+                    alt="user_profile"
+                    className="gallery_userimage" />
+                  <p className="gallery_username">{photo.user.first_name}</p>
+                </Link>
 
                 {photo.user.for_hire && (
                   <div className="for-hire">
