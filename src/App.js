@@ -32,7 +32,7 @@ function App() {
             const promises = orientation.map(orientation => 
                 axios.get(`https://api.unsplash.com/photos/random`, {
                     params: {
-                        count: 2,
+                        count: 20,
                         client_id: client_id,
                         orientation: orientation
                     }

@@ -151,10 +151,6 @@ const Descriptive = () => {
         return <img src={Gif_loader} className="loaders_gif" />
     }
 
-    // if (loading) {
-    //     console.log("loader is clciked");
-    //     return <img src={Gif_loader} alt="gif_loader" />
-    // }
 
     //// DATE ////
     const date = new Date(photo.created_at);

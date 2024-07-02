@@ -207,7 +207,11 @@
     transition: 0.3s;
     cursor: pointer;
 }
-
+/* .logout:hover{
+  color: black;
+  transition: 0.3s;
+  cursor: pointer;
+} */
 .menu_down {
     display: flex;
     align-items: center;

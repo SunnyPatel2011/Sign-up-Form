@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import './login.css';
 import { useNavigate } from "react-router-dom";
 
 function Login () {
 const navigate = useNavigate();
+
+const [email, setEmail] = useState("");
+const [password, setPassword] = useState("");
+
+
+const handleLogin = () => {
+    const users = JSON.parse(localStorage.getItem('userData')) || [];
+    
+    const user = users.find(user => user.email === email && user.password === password);
+
+    if (user) {
+        navigate('/');
+    } else {
+        alert("Invalid email or password");
+    }
+}
+
 
 return (
     <>
@@ -16,16 +33,24 @@ return (
     <div className="login-main">
     <div className="login-form">
         <label htmlFor="">Email</label>
-        <input type="text" />
+        <input type="text" 
+        id="email-name"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        />
+
         <label htmlFor="">Password</label>
-        <input type="password"/>
+        <input type="password"
+        id="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}/>
     </div>
     </div>
     <div className="login-btn">
-    <button>Login</button>
+    <button onClick={handleLogin}>Login</button>
     </div>
-    <p className="sign-up-redirect">Don't hae an account?
-        &nbsp;<span onClick={() => navigate('/')}>Join</span></p>
+    <p className="sign-up-redirect">Don't have an account?
+        &nbsp;<span onClick={() => navigate('/signup')}>Join</span></p>
     </>
 )
 }

@@ -112,6 +112,7 @@ const Header = ({ onSearch, showCategoryList=true,showHeaderdetail = true, onUpl
 										<p><Link to={'https://unsplash.com/trends'}>Trends</Link></p>
 										<p><Link to={'https://unsplash.com/awards'}>Unsplash Awards</Link></p>
 										<p><Link to={'https://unsplash.com/stats'}>Stats</Link></p>
+										<p><Link to={'/login'}>Logout</Link></p>
 									</div>
 								</div>
 							</div>
