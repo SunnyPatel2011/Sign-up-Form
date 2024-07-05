@@ -17,6 +17,7 @@ function App() {
     const [showUpload, setShowUpload] = useState(false);
     const [isSearchPerformed, setIsSearchPerformed] = useState(false);
     const client_id = process.env.REACT_APP_CLIENT_ID;
+    const ApiUrl = process.env.REACT_APP_API_URL;
 
     useEffect(() => {
         if (!photos.length) {
@@ -30,7 +31,7 @@ function App() {
             setLoading(true);
             const orientation = ['portrait', 'landscape', 'squarish'];
             const promises = orientation.map(orientation => 
-                axios.get(`https://api.unsplash.com/photos/random`, {
+                axios.get(`${ApiUrl}`, {
                     params: {
                         count: 20,
                         client_id: client_id,
